@@ -1,5 +1,6 @@
 #ifndef _OS_GPIO_H
 #define _OS_GPIO_H
+#include "global_includes.h"
 #include "stdlib.h"
 #include "stdbool.h"
 

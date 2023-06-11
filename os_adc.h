@@ -1,6 +1,7 @@
 #ifndef OS_ADC_H
 #define OS_ADH_H
 
+#include "global_includes.h"
 #include "stdlib.h"
 #include "stdint.h"
 typedef struct os_adc_t{

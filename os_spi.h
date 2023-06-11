@@ -1,6 +1,7 @@
 #ifndef _OS_SPI_H
 #define _OS_SPI_H
 
+#include "global_includes.h"
 #include "stdlib.h"
 #include "stdint.h"
 
