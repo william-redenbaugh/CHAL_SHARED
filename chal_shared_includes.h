@@ -7,5 +7,6 @@
 #include "os_i2c.h"
 #include "os_spi.h"
 #include "os_uart.h"
+#include "os_wifi.h"
 
 #endif
