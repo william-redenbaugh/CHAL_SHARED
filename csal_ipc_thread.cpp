@@ -20,7 +20,6 @@ void uart_ipc_publish_init(void *params)
     init_ipc_message_queue();
 }
 
-
 ipc_message_header_t get_message_from_interface(void){
     ipc_message_header_t header; 
     memset(&header, 0, sizeof(header));
@@ -114,44 +113,8 @@ void uart_ipc_publish_thread(void *params)
         
         // Wait until we can consume the entire node
         ipc_message_node_t event_node = ipc_block_consume_new_event();
-
         ipc_publish_msg(event_node);
-        /*
-        // ipc_message_callback_status
-        ipc_message_ret_t callback_ret;
-        callback_ret.ipc_status = IPC_MESSAGE_COMPLETE_SUCCESS;
-
-        // Writes the message header to UART first!
-        int write_size = write(uart_fd, (void *)&event_node.message_header, sizeof(ipc_message_header_t));
-
-        // If we couldn't write complete header, say we failed to publish!
-        if (write_size != sizeof(ipc_message_header_t))
-        {
-            callback_ret.ipc_status = IPC_MESSAGE_COMPLETE_FAIL;
-        }
-
-        // Write message contents after
-        if (event_node.message_header.message_len > 0 | event_node.buffer_ptr != NULL)
-        {
-            write_size = write(uart_fd, (void *)&event_node.buffer_ptr, event_node.message_header.message_len);
-            // If we couldn't write entire message, say we failed to publish!
-            if (write_size != sizeof(ipc_message_header_t))
-            {
-                callback_ret.ipc_status = IPC_MESSe_
-        switch(k){
-            case 0:
-                callback_ret.ipc_status = IPC_MESSAGE_COMPLETE_SUCCESS;
-            break;
-            case ETIMEDOUT:
-                callback_ret.ipc_status = IPC_MESSAGE_COMPLETE_FAIL_TIMEOUT;
-                printf("Timeout upon message!\n");
-            break;
-        }
-
-        if (event_node.callback_func != NULL)
-            // Any cleanup needed for the published event!
-            event_node.callback_func(callback_ret);
-        */
+        
     }
 }
 
@@ -173,9 +136,7 @@ void uart_ipc_consume_thread(void *params)
 
     for (;;)
     {
-        
         ipc_message_header_t header = get_message_from_interface();
         ipc_handle_data_from_interface(header);
-
     }
 }
