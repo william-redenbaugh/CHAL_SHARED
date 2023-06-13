@@ -12,13 +12,8 @@ typedef struct os_spi_t{
     int spi_mode;
 }os_spi_t;
 
-/**
- * @brief There are four SPI busses connected to the Spressense
-*/
-extern os_spi_t spi_zero;
-extern os_spi_t spi_three;
-extern os_spi_t spi_four;
-extern os_spi_t spi_five;
+extern os_spi_t os_spi2; 
+extern os_spi_t os_spi3;
 
 /**
  * @brief Begins the SPI interface
