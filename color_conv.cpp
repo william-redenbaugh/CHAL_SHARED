@@ -1,4 +1,5 @@
 #include "color_conv.h"
+#include "math.h"
 
 rgb_t hsv2rgb(hsv_t hsv) {
     rgb_t rgb;
