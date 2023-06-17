@@ -1,7 +1,8 @@
 #include "csal_ipc_thread.h"
 #include "csal_ipc_message_publishqueue.h"
 #include "csal_ipc_message_subscribequeue.h"
-#include "CSAL_SHARED/os_error.h"
+#include "global_includes.h"
+#include "string.h"
 #include "os_wifi.h"
 
 static ipc_interface_type_t sel_interface_type = IPC_TYPE_UDP;
@@ -110,7 +111,6 @@ void uart_ipc_publish_thread(void *params)
 {
     for (;;)
     {
-        
         // Wait until we can consume the entire node
         ipc_message_node_t event_node = ipc_block_consume_new_event();
         ipc_publish_msg(event_node);

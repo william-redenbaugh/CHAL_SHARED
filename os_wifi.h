@@ -1,8 +1,7 @@
 #ifndef _OS_WIFI_H
 #define _OS_WIFI_H
+
 #include "global_includes.h"
-#include "WiFi.h"
-#include "WiFiUdp.h"
 
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 

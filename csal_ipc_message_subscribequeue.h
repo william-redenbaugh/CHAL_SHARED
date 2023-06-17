@@ -2,8 +2,7 @@
 #define _IPC_MESSAGE_SUBSCRIBEQUEUE_H
 
 #include "csal_ipc.h"
-#include "CSAL_SHARED/os_mutx.h"
-#include "ipc_enum.h"
+#include "global_includes.h"
 
 /**
  * @brief When a callback is registered somewhere, this is the

@@ -2,8 +2,7 @@
 #define IPC_MESSAGE_PUBLISHQUEUE_H
 
 #include "csal_ipc.h"
-#include "CSAL_SHARED/os_mutx.h"
-#include "CSAL_SHARED/os_setbits.h"
+#include "global_includes.h"
 
 #define IPC_QUEUE_MAX_NUM_ELEMENTS 16
 #define TASK1_BIT   (1UL << 0UL) // zero shift for bit0
