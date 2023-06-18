@@ -5,7 +5,7 @@
 #include "string.h"
 #include "os_wifi.h"
 
-static ipc_interface_type_t sel_interface_type = IPC_TYPE_UDP;
+static ipc_interface_type_t sel_interface_type = DEFAULT_INTERFACE_TYPE;
 os_udp_server_t *udp_interface; 
 static char ip_str[] = "1.1.1.1";
 int ip_port = 6969;
@@ -16,7 +16,7 @@ void ipc_set_interface_type(ipc_interface_type_t interface_type){
     sel_interface_type = interface_type;
 }
 
-void uart_ipc_publish_init(void *params)
+void ipc_publish_init(void *params)
 {
     init_ipc_message_queue();
 }
@@ -107,7 +107,7 @@ static int ipc_publish_msg(ipc_message_node_t node){
     return ret;
 }
 
-void uart_ipc_publish_thread(void *params)
+void ipc_publish_thread(void *params)
 {
     for (;;)
     {
@@ -118,7 +118,7 @@ void uart_ipc_publish_thread(void *params)
     }
 }
 
-void uart_ipc_consume_thread_init(void *params)
+void ipc_consume_thread_init(void *params)
 {
     switch(sel_interface_type){
         case IPC_TYPE_UDP:
@@ -131,9 +131,8 @@ void uart_ipc_consume_thread_init(void *params)
     init_ipc_module();
 }
 
-void uart_ipc_consume_thread(void *params)
+void ipc_consume_thread(void *params)
 {
-
     for (;;)
     {
         ipc_message_header_t header = get_message_from_interface();

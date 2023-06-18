@@ -3,6 +3,7 @@
 
 #include "csal_ipc.h"
 #include "global_includes.h"
+#include "ipc_enum.h"
 
 /**
  * @brief When a callback is registered somewhere, this is the

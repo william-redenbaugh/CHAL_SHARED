@@ -9,4 +9,8 @@
 #include "os_uart.h"
 #include "os_wifi.h"
 
+#include "csal_ipc.h"
+#include "csal_ipc_message_publishqueue.h"
+#include "csal_ipc_message_subscribequeue.h"
+
 #endif

@@ -3,7 +3,6 @@
 
 #include "stdlib.h"
 #include "stdint.h"
-#include "global_includes.h"
 
 /**
  * @brief What is the largest buffer size we'd want our array to be
