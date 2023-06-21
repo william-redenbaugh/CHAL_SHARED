@@ -12,5 +12,5 @@
 #include "csal_ipc.h"
 #include "csal_ipc_message_publishqueue.h"
 #include "csal_ipc_message_subscribequeue.h"
-
+#include "csal_ledmatrix.h"
 #endif

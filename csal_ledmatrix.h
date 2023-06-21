@@ -19,7 +19,7 @@ typedef int (*os_init_ledmatrix_ptr)(void *ptr, int width, int height);
  * @param int y pos
  * @param rgb_t col color
 */
-typedef int (*os_matrix_setpixel_ptr)(void *ptr,int x, int y, rgb_t col);
+typedef int (*os_matrix_setpixel_ptr)(void *ptr, int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * @brief Function pointer to update the led matrix
@@ -39,7 +39,7 @@ typedef int (*os_matrix_update_ptr)(void *ptr);
 typedef struct os_ledmatrix_init{
     os_init_ledmatrix_ptr init_func;
     os_matrix_setpixel_ptr setpixel_func;
-    os_matrix_update_ptr update_fun;    
+    os_matrix_update_ptr update_func;    
 
     int width; 
     int height;

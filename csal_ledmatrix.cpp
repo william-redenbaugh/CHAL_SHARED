@@ -8,7 +8,7 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix){
     // Basic checking of the structure to make sure none of the parameters are off
     if( matrix_init.init_func == NULL       | 
         matrix_init.setpixel_func == NULL   | 
-        matrix_init.update_fun == NULL      | 
+        matrix_init.update_func == NULL      | 
         matrix_init.matrix_ptr == NULL      | 
         matrix_init.height == 0             |
         matrix_init.width == 0){
@@ -18,7 +18,7 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix){
 
     matrix->init_func = matrix_init.init_func;
     matrix->setpixel_func = matrix_init.setpixel_func;
-    matrix->update_fun = matrix_init.update_fun;
+    matrix->update_fun = matrix_init.update_func;
     matrix->height = matrix_init.height;
     matrix->width = matrix_init.width;
     matrix->data_ptr = matrix_init.matrix_ptr;
@@ -36,7 +36,7 @@ int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb){
         return OS_RET_INVALID_PARAM;
     }
 
-    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb);
+    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
 }
 
 int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv){
@@ -49,7 +49,7 @@ int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv){
     }
     rgb_t rgb = hsv2rgb(hsv);
 
-    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb);
+    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
 }
 
 int os_ledmatrix_update(os_ledmatrix_t *matrix){
