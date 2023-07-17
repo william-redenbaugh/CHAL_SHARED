@@ -8,6 +8,7 @@
 #include "os_spi.h"
 #include "os_uart.h"
 #include "os_wifi.h"
+#include "os_i2s.h"
 
 #include "csal_ipc.h"
 #include "csal_ipc_message_publishqueue.h"
