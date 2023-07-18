@@ -9,7 +9,7 @@
  * @param void *ptr to whatever data struct holding the actual ledmatrix implementation data
  * @param int width
  * @param int height
-*/
+ */
 typedef int (*os_init_ledmatrix_ptr)(void *ptr, int width, int height);
 
 /**
@@ -18,13 +18,13 @@ typedef int (*os_init_ledmatrix_ptr)(void *ptr, int width, int height);
  * @param int x pos
  * @param int y pos
  * @param rgb_t col color
-*/
+ */
 typedef int (*os_matrix_setpixel_ptr)(void *ptr, int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * @brief Function pointer to update the led matrix
  * @param void *ptr to whatever data struct holding the actual ledmatrix implementation data
-*/
+ */
 typedef int (*os_matrix_update_ptr)(void *ptr);
 
 /**
@@ -35,35 +35,37 @@ typedef int (*os_matrix_update_ptr)(void *ptr);
  * @param int width width of led matrix
  * @param int height height of led matrix
  * @param void *matrix_ptr pointer to data structure used for whatever eld matrix
-*/
-typedef struct os_ledmatrix_init{
+ */
+typedef struct os_ledmatrix_init
+{
     os_init_ledmatrix_ptr init_func;
     os_matrix_setpixel_ptr setpixel_func;
-    os_matrix_update_ptr update_func;    
+    os_matrix_update_ptr update_func;
 
-    int width; 
+    int width;
     int height;
     void *matrix_ptr;
-}os_ledmatrix_init_t;
+} os_ledmatrix_init_t;
 
 /**
  * @brief LED matrix handler
-*/
-typedef struct os_ledmatrix{
+ */
+typedef struct os_ledmatrix
+{
     os_init_ledmatrix_ptr init_func;
     os_matrix_setpixel_ptr setpixel_func;
     os_matrix_update_ptr update_fun;
 
     void *data_ptr;
-    int width; 
+    int width;
     int height;
-}os_ledmatrix_t;
+} os_ledmatrix_t;
 
 /**
  * @brief Initialize matrix
  * @param os_ledmatrix_init_t matrix initialization structure
  * @param os_ledmatrix_t *matrix that we want to initialize
-*/
+ */
 int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix);
 
 /**
@@ -72,7 +74,7 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix);
  * @param int x pos
  * @param int y pos
  * @param rgb_t col color
-*/
+ */
 int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb);
 
 /**
@@ -81,13 +83,13 @@ int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb);
  * @param int x pos
  * @param int y pos
  * @param hsv_t col color
-*/
+ */
 int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv);
 
 /**
  * @brief Updates the ledmatrix
  * @param os_ledmatrix_t *matrix that we want to initialize
-*/
+ */
 int os_ledmatrix_update(os_ledmatrix_t *matrix);
 
 #endif

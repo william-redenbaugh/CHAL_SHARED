@@ -5,7 +5,8 @@
 /**
  * @brief Structure representing an RGB color.
  */
-typedef struct {
+typedef struct
+{
     uint8_t r; /**< Red component value. */
     uint8_t g; /**< Green component value. */
     uint8_t b; /**< Blue component value. */
@@ -14,7 +15,8 @@ typedef struct {
 /**
  * @brief Structure representing an HSV color.
  */
-typedef struct {
+typedef struct
+{
     uint8_t h; /**< Hue component value. */
     uint8_t s; /**< Saturation component value. */
     uint8_t v; /**< Value (brightness) component value. */
@@ -35,6 +37,5 @@ rgb_t hsv2rgb(hsv_t hsv);
  * @return The RGB color converted from the Kelvin temperature.
  */
 rgb_t kelvin2rgb(int kelvin);
-
 
 #endif
