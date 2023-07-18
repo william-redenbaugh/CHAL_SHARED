@@ -15,19 +15,20 @@
  * Manage error correction, then any callbacks that are subscribed can then runs those callbacks!
  */
 
-typedef enum ipc_interface_type{
-    IPC_TYPE_UART, 
-    IPC_TYPE_SPI, 
-    IPC_TYPE_I2C, 
-    IPC_TYPE_UDP, 
+typedef enum ipc_interface_type
+{
+    IPC_TYPE_UART,
+    IPC_TYPE_SPI,
+    IPC_TYPE_I2C,
+    IPC_TYPE_UDP,
     IPC_TYPE_TCP
-}ipc_interface_type_t; 
+} ipc_interface_type_t;
 
 #define IPC_PORT_UDP (6969)
 
 /**
  * @brief Set's the specific interface we are using for our ipc.
-*/
+ */
 void ipc_set_interface_type(ipc_interface_type_t interface_type);
 
 /**

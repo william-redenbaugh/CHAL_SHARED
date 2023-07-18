@@ -9,7 +9,8 @@
 /**
  * @brief Enumeration for I2S sample data size in bits.
  */
-typedef enum {
+typedef enum
+{
     I2S_SAMPLE_32BITS, /**< 32 bits per sample */
     I2S_SAMPLE_16BITS, /**< 16 bits per sample */
     I2S_SAMPLE_8BITS   /**< 8 bits per sample */
@@ -18,7 +19,8 @@ typedef enum {
 /**
  * @brief Enumeration for I2S audio channel configuration.
  */
-typedef enum {
+typedef enum
+{
     I2S_CHANNEL_LEFT,  /**< Left audio channel */
     I2S_CHANNEL_RIGHT, /**< Right audio channel */
     I2S_CHANNEL_BOTH   /**< Both audio channels (stereo) */

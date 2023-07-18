@@ -6,7 +6,8 @@ ipc_subscrube_module_t *ipc_subscribe_module_main;
 ipc_subscrube_module_t *new_ipc_module(void)
 {
     ipc_subscrube_module_t *mod = new ipc_subscrube_module_t;
-    for(int n = 0; n < IPC_TYPE_ENUM_LEN; n++){
+    for (int n = 0; n < IPC_TYPE_ENUM_LEN; n++)
+    {
         mod->msg_sub_heads_list[n].head = NULL;
     }
     return mod;
@@ -35,7 +36,8 @@ bool _ipc_run_all_sub_cb(ipc_message_header_t header, uint8_t *data, ipc_subscru
         message.message_header.message_type_enum = IPC_MESSAGE_ACK;
         ipc_publish_message(message);
     }
-    else{
+    else
+    {
         ipc_msg_ack_cmd_recv();
     }
 
@@ -54,7 +56,8 @@ bool _ipc_run_all_sub_cb(ipc_message_header_t header, uint8_t *data, ipc_subscru
 
         // Header of data
         ret_cb.msg_header = header;
-        if(node->sub_cb != NULL){
+        if (node->sub_cb != NULL)
+        {
             // Run callback
             node->sub_cb(ret_cb);
         }

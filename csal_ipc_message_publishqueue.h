@@ -5,7 +5,7 @@
 #include "global_includes.h"
 
 #define IPC_QUEUE_MAX_NUM_ELEMENTS 16
-#define TASK1_BIT   (1UL << 0UL) // zero shift for bit0
+#define TASK1_BIT (1UL << 0UL) // zero shift for bit0
 
 typedef enum ipc_message_callback_status
 {
@@ -108,23 +108,23 @@ bool ipc_publish_message(ipc_message_node_t node);
 /**
  * @brief Signals that we have recieved our ack from the IPC layer that message was recieved
  * @note internal call only
-*/
-int  _ipc_msg_ack_cmd_recv(ipc_message_publish_module_t *module);
+ */
+int _ipc_msg_ack_cmd_recv(ipc_message_publish_module_t *module);
 
 /**
  * @brief Signals that we have recieved our ack from the IPC layer that message was recieved
-*/
+ */
 int ipc_msg_ack_cmd_recv(void);
 
 /**
  * @brief Blocks until we recieve the call that our messsage ack has been recieved
  * @note internal call only
-*/
+ */
 bool _ipc_msg_wait_recieve_cmd_ack(ipc_message_publish_module_t *module);
 
 /**
  * @brief Blocks until we recieve the call that our messsage ack has been recieved
-*/
+ */
 bool ipc_msg_wait_recieve_cmd_ack(void);
 
 /**
@@ -135,17 +135,17 @@ bool ipc_msg_wait_recieve_cmd_ack(void);
 ipc_message_node_t _ipc_block_consume_new_event(ipc_message_publish_module_t *module);
 
 /**
- * @brief Will a message send failiure message to the publish queue so that the other 
+ * @brief Will a message send failiure message to the publish queue so that the other
  * side of the microcontroller knows that we failed at getting their message!
  * @return publish status
-*/
+ */
 int _ipc_msg_publish_fail(ipc_message_publish_module_t *module);
 
 /**
- * @brief Will a message send failiure message to the publish queue so that the other 
+ * @brief Will a message send failiure message to the publish queue so that the other
  * side of the microcontroller knows that we failed at getting their message!
  * @return publish status
-*/
+ */
 int ipc_msg_publish_fail(void);
 
 /**

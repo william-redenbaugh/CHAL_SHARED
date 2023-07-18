@@ -16,7 +16,8 @@ bool _ipc_publish_message(ipc_message_publish_module_t *module, ipc_message_node
     return _ipc_push_message_queue(module, node);
 }
 
-int _ipc_msg_publish_fail(ipc_message_publish_module_t *module){
+int _ipc_msg_publish_fail(ipc_message_publish_module_t *module)
+{
     ipc_message_node_t fail_msg;
     fail_msg.buffer_ptr = NULL;
     fail_msg.callback_func = NULL;
@@ -24,16 +25,19 @@ int _ipc_msg_publish_fail(ipc_message_publish_module_t *module){
     fail_msg.message_header.message_type_enum = IPC_MESSAGE_ERROR;
     fail_msg.message_header.message_id = IPC_TYPE_ACK;
 
-    if(_ipc_publish_message(module, fail_msg) == true){
+    if (_ipc_publish_message(module, fail_msg) == true)
+    {
         return OS_RET_OK;
     }
-    else{
+    else
+    {
         return OS_RET_LOW_MEM_ERROR;
     }
 }
 
-int ipc_msg_publish_fail(void){
-    return    _ipc_msg_publish_fail(ipc_publish_queue_module);
+int ipc_msg_publish_fail(void)
+{
+    return _ipc_msg_publish_fail(ipc_publish_queue_module);
 }
 
 bool _ipc_push_message_queue(ipc_message_publish_module_t *module, ipc_message_node_t node)
@@ -97,7 +101,7 @@ void _ipc_msg_queue_wait_new_event(ipc_message_publish_module_t *module)
     // If there are no messages in queue
     if (num_msg == 0)
         os_waitbits_indefinite(&module->new_msg_cv, 0);
-    
+
     os_clearbits(&module->new_msg_cv, 0);
 }
 
@@ -124,33 +128,37 @@ void ipc_msg_queue_wait_new_event(void)
     _ipc_msg_queue_wait_new_event(ipc_publish_queue_module);
 }
 
-int  _ipc_msg_ack_cmd_recv(ipc_message_publish_module_t *module){
+int _ipc_msg_ack_cmd_recv(ipc_message_publish_module_t *module)
+{
     int ret = 0;
     os_setbits_signal(&module->ack_msg_mp, 0);
     return ret;
 }
 
-int ipc_msg_ack_cmd_recv(void){
+int ipc_msg_ack_cmd_recv(void)
+{
     return _ipc_msg_ack_cmd_recv(ipc_publish_queue_module);
 }
 
-bool _ipc_msg_wait_recieve_cmd_ack(ipc_message_publish_module_t *module){
-    //os_setbits_signal
+bool _ipc_msg_wait_recieve_cmd_ack(ipc_message_publish_module_t *module)
+{
+    // os_setbits_signal
     os_waitbits_indefinite(&module->ack_msg_mp, 0);
     return true;
 }
 
-bool ipc_msg_wait_recieve_cmd_ack(void){
+bool ipc_msg_wait_recieve_cmd_ack(void)
+{
     return _ipc_msg_wait_recieve_cmd_ack(ipc_publish_queue_module);
 }
 
 ipc_message_publish_module_t *_ipc_message_queue_init(void)
 {
-    if(ipc_publish_queue_module != NULL)
+    if (ipc_publish_queue_module != NULL)
         return NULL;
-    ipc_message_publish_module_t *module =  new ipc_message_publish_module_t;
+    ipc_message_publish_module_t *module = new ipc_message_publish_module_t;
     module->max_size = IPC_QUEUE_MAX_NUM_ELEMENTS;
-    module->node_list =  new ipc_message_node_t[20];
+    module->node_list = new ipc_message_node_t[20];
     module->current_size = 0;
     module->head_pos = 0;
     module->tail_pos = 0;
