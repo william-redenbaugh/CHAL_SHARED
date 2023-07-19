@@ -5,9 +5,9 @@
 #include "stdlib.h"
 #include "stdint.h"
 
+#define PRINTF_BUFFER_SIZE 256
 typedef struct os_uart_t
 {
-    int bus;
     uint32_t baud;
     int fd;
 } os_uart_t;
@@ -16,13 +16,20 @@ typedef struct os_uart_t
  * @brief Begins the UART interface
  * @param os_uart_t *pointer to the UART interface
  */
-int os_uart_begin(os_uart_t *uart);
+int os_uart_begin(os_uart_t *uart, int fd, int baud);
 
 /**
  * @brief Completes the UART Interface
  * @param os_uart_t *pointer to the UART interface
  */
 int os_uart_end(os_uart_t *uart);
+
+/**
+ * @brief printf for specific uart interface
+ * @param os_uart_t *uart interface
+ * @param ... params
+*/
+void os_uart_printf(os_uart_t *uart, const char *format, ...);
 
 /**
  * @brief Sets the frequency of the UART interface
