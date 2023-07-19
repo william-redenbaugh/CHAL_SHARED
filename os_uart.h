@@ -5,7 +5,6 @@
 #include "stdlib.h"
 #include "stdint.h"
 
-#define PRINTF_BUFFER_SIZE 256
 typedef struct os_uart_t
 {
     uint32_t baud;
@@ -30,6 +29,39 @@ int os_uart_end(os_uart_t *uart);
  * @param ... params
 */
 void os_uart_printf(os_uart_t *uart, const char *format, ...);
+
+/**
+ * @brief Reads characters from the UART until a specified terminator character is encountered.
+ *
+ * This function reads characters from the UART associated with the given UART object until the specified
+ * terminator character is encountered or the maximum number of characters (size) is reached, whichever comes first.
+ *
+ * @param uart      Pointer to the UART object representing the UART to read from.
+ * @param terminator The character used as a terminator to stop reading from the UART.
+ * @param data      Pointer to the buffer where the read data will be stored.
+ * @param size      The maximum number of characters to read (size of the data buffer).
+ *
+ * @return The number of characters actually read from the UART and stored in the data buffer.
+ *         The return value does not include the terminator character.
+ */
+int os_uart_readstring_until(os_uart_t *uart, char terminator, uint8_t *data, size_t size);
+
+
+/**
+ * @brief Reads a string of characters from the UART.
+ *
+ * This function reads characters from the UART associated with the given UART object and stores them in the provided
+ * data buffer until the maximum number of characters (size) is reached or a null terminator ('\0') is encountered,
+ * whichever comes first.
+ *
+ * @param uart      Pointer to the UART object representing the UART to read from.
+ * @param data      Pointer to the buffer where the read data will be stored.
+ * @param size      The maximum number of characters to read (size of the data buffer).
+ *
+ * @return The number of characters actually read from the UART and stored in the data buffer.
+ *         The return value does not include the null terminator ('\0').
+ */
+int os_uart_readstring(os_uart_t *uart, uint8_t *data, size_t size);
 
 /**
  * @brief Sets the frequency of the UART interface
