@@ -3,6 +3,10 @@
 
 #include "stdlib.h"
 #include "stdint.h"
+#include "enabled_modules.h"
+
+#ifdef OS_IPC_H
+
 
 /**
  * @brief What is the largest buffer size we'd want our array to be
@@ -47,4 +51,5 @@ ipc_message_header_t deserialize_message_header(uint8_t *buffer, size_t len);
  */
 bool serialize_message_header(ipc_message_header_t msg, uint8_t *buffer, size_t len);
 
+#endif
 #endif

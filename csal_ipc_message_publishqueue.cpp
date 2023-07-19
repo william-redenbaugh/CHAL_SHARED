@@ -2,6 +2,8 @@
 
 #include "ipc_enum.h"
 
+#ifdef OS_IPC_H
+
 ipc_message_publish_module_t *ipc_publish_queue_module = NULL;
 
 bool ipc_publish_message(ipc_message_node_t node)
@@ -174,3 +176,4 @@ void init_ipc_message_queue(void)
 {
     ipc_publish_queue_module = _ipc_message_queue_init();
 }
+#endif

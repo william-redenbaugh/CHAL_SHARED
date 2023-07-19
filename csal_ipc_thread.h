@@ -1,6 +1,9 @@
 #ifndef _CSAL_IPC_THREAD_H
 #define _CSAL_IPC_THREAD_H
 
+#include "enabled_modules.h"
+#ifdef OS_IPC_H
+
 /**
  * Module explaination!
  * So this is the  IPC module!
@@ -52,4 +55,5 @@ void ipc_consume_thread_init(void *params);
  * Will also publish events
  */
 void ipc_consume_thread(void *params);
+#endif
 #endif

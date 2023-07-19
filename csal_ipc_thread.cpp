@@ -5,6 +5,8 @@
 #include "string.h"
 #include "os_wifi.h"
 
+#ifdef OS_IPC_H
+
 static ipc_interface_type_t sel_interface_type = DEFAULT_INTERFACE_TYPE;
 os_udp_server_t *udp_interface;
 static char ip_str[] = "1.1.1.1";
@@ -152,3 +154,4 @@ void ipc_consume_thread(void *params)
         ipc_handle_data_from_interface(header);
     }
 }
+#endif

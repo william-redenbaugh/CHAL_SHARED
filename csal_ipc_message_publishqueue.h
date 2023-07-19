@@ -4,6 +4,8 @@
 #include "csal_ipc.h"
 #include "global_includes.h"
 
+#ifdef OS_IPC_H
+
 #define IPC_QUEUE_MAX_NUM_ELEMENTS 16
 #define TASK1_BIT (1UL << 0UL) // zero shift for bit0
 

@@ -1,6 +1,8 @@
 #include "csal_ipc_message_subscribequeue.h"
 #include "csal_ipc_message_publishqueue.h"
 
+#ifdef OS_IPC_H
+
 ipc_subscrube_module_t *ipc_subscribe_module_main;
 
 ipc_subscrube_module_t *new_ipc_module(void)
@@ -115,3 +117,4 @@ bool ipc_attach_cb(int message_id, ipc_sub_cb specified_cb)
 {
     return _ipc_attach_cb(ipc_subscribe_module_main, message_id, specified_cb);
 }
+#endif

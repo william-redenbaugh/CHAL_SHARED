@@ -5,6 +5,8 @@
 #include "global_includes.h"
 #include "ipc_enum.h"
 
+#ifdef OS_IPC_H
+
 /**
  * @brief When a callback is registered somewhere, this is the
  * return function given to it.
@@ -41,4 +43,5 @@ bool _ipc_attach_cb(ipc_subscrube_module_t *mod, int message_id, ipc_sub_cb spec
 bool ipc_attach_cb(int message_id, ipc_sub_cb specified_cb);
 void init_ipc_module(void);
 
+#endif
 #endif

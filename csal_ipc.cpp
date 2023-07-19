@@ -1,5 +1,8 @@
 #include "csal_ipc.h"
 
+#ifdef OS_IPC_H
+
+
 ipc_message_header_t deserialize_message_header(uint8_t *buffer, size_t len)
 {
     ipc_message_header_t msg;
@@ -43,3 +46,5 @@ bool serialize_message_header(ipc_message_header_t msg, uint8_t *buffer, size_t 
     buffer[8] = msg.message_type_enum;
     return true;
 }
+
+#endif
