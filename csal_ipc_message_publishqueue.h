@@ -160,3 +160,4 @@ ipc_message_node_t ipc_block_consume_new_event(void);
  */
 ipc_message_publish_module_t *_ipc_message_queue_init(void);
 #endif
+#endif
