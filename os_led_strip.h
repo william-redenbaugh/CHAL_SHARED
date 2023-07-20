@@ -1,6 +1,7 @@
 #ifndef _OS_LED_STRIP_H
 #define _OS_LED_STRIP_H
 #include "platform_cshal.h"
+#include "color_conv.h"
 
 /**
  * @brief Initializes the LED strip.
@@ -30,6 +31,26 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
  * @return 0 on success, or a negative error code on failure.
  */
 int os_led_strip_set(os_led_strip_t *strip, uint32_t pixel, uint8_t r, uint8_t g, uint8_t b);
+
+/**
+ * @brief Sets the color of a specific pixel in the LED strip.
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param pixel The index of the pixel whose color will be set.
+ * @param rgb_t the red, green, blue componenet
+ */
+int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col);
+
+/**
+ * @brief Sets the color of a specific pixel in the LED strip.
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param pixel The index of the pixel whose color will be set.
+ * @param hsv_t the red, green, blue componenet
+ */
+int os_led_strip_set_hsv(os_led_strip_t *strip, uint32_t pixel, hsv_t col);
 
 /**
  * @brief Shows the updated LED colors on the strip.
