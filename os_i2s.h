@@ -7,6 +7,17 @@
 #define I2S_LIBRARY_H
 
 /**
+ * @brief Pinmap for i2s devices
+ */
+typedef struct os_i2s_pinmap
+{
+    int serial_clk;
+    int left_right_clk;
+    int serial_data;
+    int serial_data_cs;
+} os_i2s_pinmap_t;
+
+/**
  * @brief Enumeration for I2S sample data size in bits.
  */
 typedef enum
@@ -38,7 +49,7 @@ typedef enum
  * @param sample_rate The desired audio sample rate in Hz.
  * @return 0 on success, -1 on failure.
  */
-int i2s_host_init(os_i2s_host_t *host, int bus, os_i2s_channels_t chan, os_i2s_sample_bits_t bits, uint32_t sample_rate);
+int i2s_host_init(os_i2s_host_t *host, int bus, os_i2s_pinmap_t pinmap, os_i2s_channels_t chan, os_i2s_sample_bits_t bits, uint32_t sample_rate);
 
 /**
  * @brief Read audio data from the I2S host.
