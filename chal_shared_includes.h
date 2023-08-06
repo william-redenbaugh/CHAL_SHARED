@@ -16,5 +16,6 @@
 #include "csal_ipc_message_subscribequeue.h"
 #include "csal_ledmatrix.h"
 #include "os_led_strip.h"
+#include "status_led.h"
 
 #endif
