@@ -14,11 +14,12 @@
 /**
  * @brief Error codes for the HAL layer.
  */
-typedef enum {
-    HAL_BT_SERIAL_OK,              ///< Operation completed successfully.
-    HAL_BT_SERIAL_ERROR,           ///< General error occurred.
-    HAL_BT_SERIAL_INVALID_ARG,     ///< Invalid argument provided.
-    HAL_BT_SERIAL_BUFFER_OVERFLOW  ///< Circular buffer overflow occurred.
+typedef enum
+{
+    HAL_BT_SERIAL_OK,             ///< Operation completed successfully.
+    HAL_BT_SERIAL_ERROR,          ///< General error occurred.
+    HAL_BT_SERIAL_INVALID_ARG,    ///< Invalid argument provided.
+    HAL_BT_SERIAL_BUFFER_OVERFLOW ///< Circular buffer overflow occurred.
 } hal_bt_serial_err_t;
 
 /**
@@ -40,7 +41,7 @@ hal_bt_serial_err_t hal_bluetooth_serial_init(void);
  * @param[in] len  Length of the data to be sent.
  * @return HAL_BT_SERIAL_OK on success, or an appropriate error code if an error occurs.
  */
-hal_bt_serial_err_t hal_bluetooth_serial_send(const uint8_t *data, size_t len);
+int hal_bluetooth_serial_send(const uint8_t *data, size_t len);
 
 /**
  * @brief Receive data over Bluetooth Serial.
@@ -53,7 +54,7 @@ hal_bt_serial_err_t hal_bluetooth_serial_send(const uint8_t *data, size_t len);
  * @return HAL_BT_SERIAL_OK on success, HAL_BT_SERIAL_ERROR if there is insufficient data,
  *         or HAL_BT_SERIAL_INVALID_ARG if the provided buffer is NULL or the length is 0.
  */
-hal_bt_serial_err_t hal_bluetooth_serial_receive(uint8_t *data, size_t len);
+int hal_bluetooth_serial_receive(uint8_t *data, size_t len);
 
 /**
  * @brief Close the Bluetooth Serial module.
