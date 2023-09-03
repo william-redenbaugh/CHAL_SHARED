@@ -6,6 +6,7 @@
 #ifndef I2S_LIBRARY_H
 #define I2S_LIBRARY_H
 
+#ifdef OS_I2S
 /**
  * @brief Pinmap for i2s devices
  */
@@ -64,3 +65,4 @@ int i2s_host_init(os_i2s_host_t *host, int bus, os_i2s_pinmap_t pinmap, os_i2s_c
 int i2s_host_read(os_i2s_host_t *host, void *ptr, size_t *len);
 
 #endif // I2S_LIBRARY_H
+#endif

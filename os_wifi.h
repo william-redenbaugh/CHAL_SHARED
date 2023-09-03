@@ -3,11 +3,12 @@
 
 #include "global_includes.h"
 
+#ifdef OS_WIFI
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 
 /**
  * @brief Connects the device to a Wi-Fi network in station (client) mode.
- * 
+ *
  * This function attempts to connect the device to the specified Wi-Fi network
  * using the provided SSID and password. The device will operate in station mode,
  * allowing it to act as a client and connect to an existing Wi-Fi network.
@@ -21,7 +22,7 @@ int os_wifi_connect_sta(char *ssid, char *password);
 
 /**
  * @brief Disconnects the device from the currently connected Wi-Fi network in station (client) mode.
- * 
+ *
  * This function disconnects the device from the currently connected Wi-Fi network
  * when operating in station mode. It terminates the existing network connection,
  * allowing the device to no longer be associated with the Wi-Fi network.
@@ -127,4 +128,5 @@ int os_wifi_receive_packet_indefinite(os_udp_server_t *udp, uint16_t *packet_siz
  * @see os_wifi_send_udp_packet
  */
 int os_wifi_deconstruct_udp_server(os_udp_server_t *udp);
+#endif
 #endif

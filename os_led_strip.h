@@ -3,6 +3,8 @@
 #include "platform_cshal.h"
 #include "color_conv.h"
 
+#ifdef OS_LED_STRIP
+
 /**
  * @brief Initializes the LED strip.
  *
@@ -63,4 +65,5 @@ int os_led_strip_set_hsv(os_led_strip_t *strip, uint32_t pixel, hsv_t col);
  */
 int os_led_strip_show(os_led_strip_t *strip);
 
+#endif
 #endif
