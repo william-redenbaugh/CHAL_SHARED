@@ -2,7 +2,7 @@
 #define _OS_LED_STRIP_H
 #include "platform_cshal.h"
 #include "color_conv.h"
-
+#include "enabled_modules.h"
 #ifdef OS_LED_STRIP
 
 /**

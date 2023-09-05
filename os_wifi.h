@@ -2,7 +2,7 @@
 #define _OS_WIFI_H
 
 #include "global_includes.h"
-
+#include "enabled_modules.h"
 #ifdef OS_WIFI
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 
