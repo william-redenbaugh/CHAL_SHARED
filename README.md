@@ -33,3 +33,5 @@ All of our hardware modules that may or may not be implemented are wraped throug
 - UART ```os_uart.h```
 - WiFi ```os_wifi.h```
 - ADC ```os_adc.h```
+- LED Matrix ```csal_ledmatrix.cpp/.h```
+- LED Strip ```os_led_strip.cpp/.h```

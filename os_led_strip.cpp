@@ -9,6 +9,9 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
         return OS_RET_NULL_PTR;
     }
 
+    // Set number of pixels
+    strip->numpixel = numpixels;
+    
     switch (type)
     {
 #ifdef NEOPIXEL_LED_STRIP
