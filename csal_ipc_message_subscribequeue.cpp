@@ -1,10 +1,26 @@
+/**
+ * @file csal_ipc_message_subscribequeue.cpp
+ * @brief This file contains the implementation of the IPC message subscribe queue module.
+ * 
+ * The IPC message subscribe queue module is responsible for managing the IPC message subscriptions.
+ * It provides functions for creating a new IPC module, initializing the IPC module, running all subscribed callbacks,
+ * and attaching a callback to a specific message ID.
+ */
 #include "csal_ipc_message_subscribequeue.h"
+#include "csal_ipc_message_publishqueue.h"
 #include "csal_ipc_message_publishqueue.h"
 
 #ifdef OS_IPC_H
 
 ipc_subscrube_module_t *ipc_subscribe_module_main;
 
+/**
+ * @brief Creates a new IPC module.
+ * 
+ * This function creates a new IPC module and initializes its message subscription heads list.
+ * 
+ * @return A pointer to the newly created IPC module.
+ */
 ipc_subscrube_module_t *new_ipc_module(void)
 {
     ipc_subscrube_module_t *mod = new ipc_subscrube_module_t;
@@ -15,11 +31,28 @@ ipc_subscrube_module_t *new_ipc_module(void)
     return mod;
 }
 
+/**
+ * @brief Initializes the main IPC module.
+ * 
+ * This function initializes the main IPC module by creating a new IPC module and assigning it to the main IPC module.
+ */
 void init_ipc_module(void)
 {
     ipc_subscribe_module_main = new_ipc_module();
 }
 
+/**
+ * @brief Runs all subscribed callbacks for a specific message.
+ * 
+ * This function runs all callbacks that are subscribed to the message with the specified header.
+ * If the message is an ACK, it notifies the publish module that the message has been received.
+ * If the message is not an ACK, it sends an ACK back through the IPC layer.
+ * 
+ * @param header The header of the message.
+ * @param data The data of the message.
+ * @param mod The IPC module.
+ * @return true if the operation was successful, false otherwise.
+ */
 bool _ipc_run_all_sub_cb(ipc_message_header_t header, uint8_t *data, ipc_subscrube_module_t *mod)
 {
     if (header.message_id < 0 || header.message_id >= IPC_TYPE_ENUM_LEN)
@@ -71,11 +104,30 @@ bool _ipc_run_all_sub_cb(ipc_message_header_t header, uint8_t *data, ipc_subscru
     return true;
 }
 
+/**
+ * @brief Runs all subscribed callbacks for a specific message in the main IPC module.
+ * 
+ * This function is a wrapper for the _ipc_run_all_sub_cb function, using the main IPC module as the module parameter.
+ * 
+ * @param header The header of the message.
+ * @param data The data of the message.
+ * @return true if the operation was successful, false otherwise.
+ */
 bool ipc_run_all_sub_cb(ipc_message_header_t header, uint8_t *data)
 {
     return _ipc_run_all_sub_cb(header, data, ipc_subscribe_module_main);
 }
 
+/**
+ * @brief Attaches a callback to a specific message ID in an IPC module.
+ * 
+ * This function attaches a specified callback to the message with the specified ID in the specified IPC module.
+ * 
+ * @param mod The IPC module.
+ * @param message_id The ID of the message.
+ * @param specified_cb The callback to be attached.
+ * @return true if the operation was successful, false otherwise.
+ */
 bool _ipc_attach_cb(ipc_subscrube_module_t *mod, int message_id, ipc_sub_cb specified_cb)
 {
     // Any conditons that might not allow us to attach the callback
@@ -113,6 +165,15 @@ bool _ipc_attach_cb(ipc_subscrube_module_t *mod, int message_id, ipc_sub_cb spec
     return true;
 }
 
+/**
+ * @brief Attaches a callback to a specific message ID in the main IPC module.
+ * 
+ * This function is a wrapper for the _ipc_attach_cb function, using the main IPC module as the module parameter.
+ * 
+ * @param message_id The ID of the message.
+ * @param specified_cb The callback to be attached.
+ * @return true if the operation was successful, false otherwise.
+ */
 bool ipc_attach_cb(int message_id, ipc_sub_cb specified_cb)
 {
     return _ipc_attach_cb(ipc_subscribe_module_main, message_id, specified_cb);
