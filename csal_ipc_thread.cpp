@@ -4,6 +4,7 @@
 #include "global_includes.h"
 #include "string.h"
 #include "os_wifi.h"
+#include "enabled_modules.h"
 
 #ifdef OS_IPC_H
 

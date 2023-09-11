@@ -9,6 +9,7 @@ typedef struct os_uart_t
 {
     uint32_t baud;
     int fd;
+    int bus;
 } os_uart_t;
 
 /**
@@ -27,7 +28,7 @@ int os_uart_end(os_uart_t *uart);
  * @brief printf for specific uart interface
  * @param os_uart_t *uart interface
  * @param ... params
-*/
+ */
 void os_uart_printf(os_uart_t *uart, const char *format, ...);
 
 /**
@@ -45,7 +46,6 @@ void os_uart_printf(os_uart_t *uart, const char *format, ...);
  *         The return value does not include the terminator character.
  */
 int os_uart_readstring_until(os_uart_t *uart, char terminator, uint8_t *data, size_t size);
-
 
 /**
  * @brief Reads a string of characters from the UART.
