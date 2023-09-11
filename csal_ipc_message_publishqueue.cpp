@@ -1,5 +1,5 @@
 #include "csal_ipc_message_publishqueue.h"
-
+#include "global_includes.h"
 #include "ipc_enum.h"
 
 #ifdef OS_IPC_H
