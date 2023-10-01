@@ -5,28 +5,58 @@
 #include "stdlib.h"
 #include "stdint.h"
 
+typedef struct os_spi_gpio_t
+{
+    int mosi = -1;
+    int miso = -1;
+    int clk = -1;
+} os_spi_gpio_t;
+
 typedef struct os_spi_t
 {
+
     int fd;
-    int xfer_speed;
-    int bus;
-    int spi_mode;
+    // If platform supports flexible GPIO configuration
+    os_spi_gpio_t gpio_man;
+
+    // Pointer to spi handle
 } os_spi_t;
 
-extern os_spi_t os_spi2;
-extern os_spi_t os_spi3;
+typedef struct os_device_t
+{
+    uint8_t spi_mode;
+    size_t dma_buf_size;
+    int chip_select;
+    int clk;
+    void *device;
+    os_spi_t *bus;
+} os_device_t;
+
+typedef struct os_device_init_params
+{
+    size_t dma_buf_size;
+    uint8_t spi_mode;
+    int cs_gpio;
+    int clk;
+    os_spi_t *bus;
+} os_device_init_params;
 
 /**
  * @brief Begins the SPI interface
  * @param os_spi_t *pointer to the SPI interface
  */
-int os_spi_begin(os_spi_t *spi);
+int os_spi_initialize(os_spi_t *spi, int fd, os_spi_gpio_t *gpio);
 
 /**
  * @brief Stops the SPI interface
  * @param os_spi_t *pointer to the SPI interface
  */
-int os_spi_end(os_spi_t *spi);
+int os_spi_deinit(os_spi_t *spi);
+
+/**
+ * @brief We need to pair a device on the spi_bus;
+ */
+int os_spi_couple_device(os_device_init_params init_params, os_device_t *device);
 
 /**
  * @brief Sets the SPI interface Speed
