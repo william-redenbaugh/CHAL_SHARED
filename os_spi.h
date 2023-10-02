@@ -59,6 +59,11 @@ int os_spi_deinit(os_spi_t *spi);
 int os_spi_couple_device(os_device_init_params init_params, os_device_t *device);
 
 /**
+ *
+ */
+int os_spi_decouple_device(os_device_t *device);
+
+/**
  * @brief Sets the SPI interface Speed
  * @param os_spi_t *pointer to the SPI interface
  * @param uint32_t freq_hz speed of interface
@@ -72,7 +77,7 @@ int os_spi_setbus(os_spi_t *spi, uint32_t freq_hz);
  * @param uint8_t* pointer to sending buffer
  * @param size_t size of buffer transfering
  */
-int os_spi_transfer(os_spi_t *spi, uint8_t *rx, uint8_t *tx, size_t size);
+int os_spi_transfer(os_device_t *device, uint8_t *rx, uint8_t *tx, size_t size);
 
 /**
  * @brief Sends data to the SPI interface
@@ -80,7 +85,7 @@ int os_spi_transfer(os_spi_t *spi, uint8_t *rx, uint8_t *tx, size_t size);
  * @param uint8_t *buf pointer to sending buffer
  * @param size_t size of buffer sending data out
  */
-int os_spi_send(os_spi_t *spi, uint8_t *buf, size_t size);
+int os_spi_send(os_device_t *device, uint8_t *buf, size_t size);
 
 /**
  * @brief Recieves Data from the SPI interface
@@ -88,5 +93,5 @@ int os_spi_send(os_spi_t *spi, uint8_t *buf, size_t size);
  * @param uint8_t *buf pointer to recieving buffer
  * @param size_t size of buffer reciving data in
  */
-int os_spi_recieve(os_spi_t *spi, uint8_t *buf, size_t size);
+int os_spi_recieve(os_device_t *device, uint8_t *buf, size_t size);
 #endif
