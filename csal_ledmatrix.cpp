@@ -1,4 +1,5 @@
 #include "csal_ledmatrix.h"
+#include "global_includes.h"
 
 int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
 {

@@ -1,7 +1,7 @@
 #ifndef _CSAL_LEDMATRIX_H
 #define _CSAL_LEDMATRIX_H
 
-#include "global_includes.h"
+#include "CSAL_SHARED/os_error.h"
 #include "color_conv.h"
 
 /**
