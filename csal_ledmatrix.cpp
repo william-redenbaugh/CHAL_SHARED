@@ -3,8 +3,10 @@
 
 int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
 {
+
     if (matrix == NULL)
     {
+        Serial.println("Matrix null");
         return OS_RET_NULL_PTR;
     }
 
@@ -28,7 +30,7 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
     matrix->data_ptr = matrix_init.matrix_ptr;
 
     // Calls the initialization function
-    return matrix->update_fun(matrix->data_ptr);
+    return matrix->init_func(matrix->data_ptr, matrix->width, matrix->height);
 }
 
 int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb)
