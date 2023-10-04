@@ -2,8 +2,8 @@
 
 #ifdef OS_TEST_SPI
 
-os_spi_t spi_bus;
-os_device_t spi_device;
+static os_spi_t spi_bus;
+static os_device_t spi_device;
 
 void test_spi(void *parameters)
 {
