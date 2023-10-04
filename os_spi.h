@@ -1,7 +1,6 @@
 #ifndef _OS_SPI_H
 #define _OS_SPI_H
 
-#include "global_includes.h"
 #include "stdlib.h"
 #include "stdint.h"
 
@@ -12,7 +11,7 @@ typedef struct os_spi_gpio_t
     int clk = -1;
 } os_spi_gpio_t;
 
-typedef struct os_spi_t
+typedef struct __os_spi_t
 {
 
     int fd;
