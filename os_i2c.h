@@ -5,6 +5,12 @@
 #include "stdlib.h"
 #include "stdint.h"
 
+typedef struct os_i2c_gpio_t
+{
+    int scl_gpio; 
+    int sda_gpio;
+} os_i2c_gpio_t;
+
 typedef struct os_i2c_t
 {
     int fd;
@@ -17,7 +23,7 @@ extern os_i2c_t i2c_one;
  * @brief Begins the I2C Interface
  * @param os_i2c_t *pointer to the I2C interface
  */
-int os_i2c_begin(os_i2c_t *i2c);
+int os_i2c_begin(os_i2c_t *i2c, int fd, int speed);
 
 /**
  * @brief Ends the I2C interface
