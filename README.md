@@ -26,12 +26,27 @@ Shared libraries for all our CHAL components
 All of our hardware modules that may or may not be implemented are wraped through modules defined inside here. 
 
 - SPI ```os_spi.h```
+    - Mostly function declarations, and maybe some platform generic calls for the SPI bus interface.
+    - Setup such that you need to first initialize a SPI bus, then you can "add" hosts onto the bus, ergo setting up a chip select pin and connecting it to a selected SPI bus on whatever gpio pins(or whatever the platform supports)
 - Bluetooth ```os_bt.h```
+     - Mostly function declarations, bluetooth endpoints and descripter information. 
+     - Helps send data, setup callbacks for received data from specific endpoints and descripters. 
+     - Non BLE interface information
 - GPIO ```os_gpio.h```
+    - General purpose IO function declarations, and maybe some helper code that's platform agnostic.
 - I2S ```os_i2s.h```
+     - Mostly function declarations, and maybe some platform generic calls for the I2C bus interface.
+     - Sets up device on bus(based off chip select pin), send data to that device
 - I2C ```os_i2c.h```
+    - Mostly function declarations, and maybe some platform generic calls for the I2C bus interface.
+     - Basic interface, you can send out data to a specific address on the bus.
 - UART ```os_uart.h```
+    - Mostly function declarations, and maybe some platform generic calls for the I2C bus interface.
+     - Basic interface, you setup the gpios(if supported on the platform, otherwise it's whatever gpio they are set on) and send data, no device or address
 - WiFi ```os_wifi.h```
+    - Mostly function declarations, and maybe some platform generic calls for the WiFi interface
+    - Currently only designed for a singular WiFi interfaces, and no ethernet
+    - Construct and deconstruct connectionst to WiFi interfaces
+    - Hosting TCP and UDP socket servers, also supports TCP and UDP socket clients
 - ADC ```os_adc.h```
-- LED Matrix ```csal_ledmatrix.cpp/.h```
-- LED Strip ```os_led_strip.cpp/.h```
+    - General purpose IO function declarations, and maybe some helper code that's platform agnostic.

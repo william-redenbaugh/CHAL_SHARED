@@ -64,5 +64,13 @@ int i2s_host_init(os_i2s_host_t *host, int bus, os_i2s_pinmap_t pinmap, os_i2s_c
  */
 int i2s_host_read(os_i2s_host_t *host, void *ptr, size_t *len);
 
+/**
+ * @brief Add's a device to the bus interface
+ * @param os_i2s_host_t *host bus interface we are using
+ * @param os_i2s_device_t *device
+ * @param int chip_select_gpio for whatever is selected device
+ */
+int i2s_device_host_couple(os_i2s_host_t *host, os_i2s_device_t *device, int chip_select_gpio);
+
 #endif // I2S_LIBRARY_H
 #endif
