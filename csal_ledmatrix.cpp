@@ -122,4 +122,39 @@ int os_ledmatrix_update(os_ledmatrix_t *matrix)
 
 int os_setpixel_ledmatrix_hsv_image(os_ledmatrix_t *matrix, hsv_t *hsv_range)
 {
+    if (matrix == NULL)
+    {
+        return OS_RET_NULL_PTR;
+    }
+
+    int final_ret;
+    int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
+
+    for (int x = 0; x < matrix->width; x++)
+    {
+        for (int y = 0; y < matrix->height; y++)
+        {
+            rgb_t rgb = hsv2rgb(hsv_range[x * matrix->width + y]);
+            ret = matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+
+            // Failiure to update LED matrix
+            if (ret != OS_RET_OK)
+            {
+                int final_ret = os_mut_exit((os_mut_t *)matrix->matrix_mut);
+                if (final_ret != OS_RET_OK)
+                {
+                    return final_ret;
+                }
+                return ret;
+            }
+        }
+    }
+
+    ret = os_mut_exit((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    return final_ret;
 }
