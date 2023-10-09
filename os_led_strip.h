@@ -157,9 +157,29 @@ int os_led_strip_set(os_led_strip_t *strip, uint32_t pixel, uint8_t r, uint8_t g
  * This function sets the RGB color of a specific pixel in the LED strip.
  * @param strip A pointer to the initialized LED strip structure.
  * @param pixel The index of the pixel whose color will be set.
- * @param rgb_t the red, green, blue componenet
+ * @param rgb_t the red, green, blue component
  */
 int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col);
+
+/**
+ * @brief * @brief Sets the color of a range of specific pixels in the LED strip.
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param uint32_t lower_range Lower pixel bounds to set
+ * @param hsv_t* pointer to list of values
+ */
+int os_led_strip_set_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t *col);
+
+/**
+ * @brief * @brief Fills the color of a specific pixel in the LED strip all to same color
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param uint32_t lower_range Lower pixel bounds to set
+ * @param hsv_t* pointer to list of values
+ */
+int os_led_strip_fill_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t col);
 
 /**
  * @brief Sets the color of a specific pixel in the LED strip.
@@ -167,9 +187,29 @@ int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col);
  * This function sets the RGB color of a specific pixel in the LED strip.
  * @param strip A pointer to the initialized LED strip structure.
  * @param pixel The index of the pixel whose color will be set.
- * @param hsv_t the red, green, blue componenet
+ * @param hsv_t the hue, saturation and value component
  */
 int os_led_strip_set_hsv(os_led_strip_t *strip, uint32_t pixel, hsv_t col);
+
+/**
+ * @brief * @brief Sets the color of a range of specific pixels in the LED strip.
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param uint32_t lower_range Lower pixel bounds to set
+ * @param hsv_t* pointer to list of values
+ */
+int os_led_strip_set_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t *col);
+
+/**
+ * @brief * @brief Fills the color of a specific pixel in the LED strip all to same color
+ *
+ * This function sets the RGB color of a specific pixel in the LED strip.
+ * @param strip A pointer to the initialized LED strip structure.
+ * @param uint32_t lower_range Lower pixel bounds to set
+ * @param hsv_t* pointer to list of values
+ */
+int os_led_strip_fill_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t col);
 
 /**
  * @brief Shows the updated LED colors on the strip.

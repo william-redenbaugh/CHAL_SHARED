@@ -11,7 +11,13 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
 
     // Set number of pixels
     strip->numpixel = numpixels;
-    
+
+    int ret = os_mut_init(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
     switch (type)
     {
 #ifdef NEOPIXEL_LED_STRIP
@@ -46,7 +52,19 @@ int os_led_strip_set(os_led_strip_t *strip, uint32_t pixel, uint8_t r, uint8_t g
     {
         return OS_RET_NULL_PTR;
     }
-    return strip->strip_set_func(strip->strip, pixel, r, g, b);
+
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    int final_ret = strip->strip_set_func(strip->strip, pixel, r, g, b);
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return final_ret;
 }
 
 int os_led_strip_show(os_led_strip_t *strip)
@@ -57,12 +75,199 @@ int os_led_strip_show(os_led_strip_t *strip)
         return OS_RET_NULL_PTR;
     }
 
-    return strip->strip_show_func(strip->strip);
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    int final_ret = strip->strip_show_func(strip->strip);
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return final_ret;
 }
 
 int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col)
 {
     return os_led_strip_set(strip, pixel, col.r, col.g, col.b);
+}
+
+int os_led_strip_set_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t *col)
+{
+    // Bounds check!
+    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    if (lower_range >= upper_range)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    // Iterate through range of pixels to set in range
+    for (int n = lower_range; n <= upper_range; n++)
+    {
+        ret = strip->strip_set_func(strip->strip, n, col[lower_range + n].r, col[lower_range + n].g, col[lower_range + n].b);
+        if (ret != OS_RET_OK)
+        {
+            // Failiure somewhere, exit out!
+            int final_ret = os_mut_exit(&strip->mutex);
+            if (final_ret != OS_RET_OK)
+            {
+                return final_ret;
+            }
+            return ret;
+        }
+    }
+
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return ret;
+}
+
+int os_led_strip_set_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t *col)
+{
+    // Bounds check!
+    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    if (lower_range >= upper_range)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    // Iterate through range of pixels to set in range
+    for (int n = lower_range; n <= upper_range; n++)
+    {
+        rgb_t col_rgb = hsv2rgb(col[lower_range + n]);
+
+        ret = strip->strip_set_func(strip->strip, n, col_rgb.r, col_rgb.g, col_rgb.b);
+        if (ret != OS_RET_OK)
+        {
+            // Failiure somewhere, exit out!
+            int final_ret = os_mut_exit(&strip->mutex);
+            if (final_ret != OS_RET_OK)
+            {
+                return final_ret;
+            }
+            return ret;
+        }
+    }
+
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return ret;
+}
+
+int os_led_strip_fill_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t col)
+{
+    // Bounds check!
+    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    if (lower_range >= upper_range)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    // Iterate through range of pixels to set in range
+    for (int n = lower_range; n <= upper_range; n++)
+    {
+
+        ret = strip->strip_set_func(strip->strip, n, col.r, col.g, col.b);
+        if (ret != OS_RET_OK)
+        {
+            // Failiure somewhere, exit out!
+            int final_ret = os_mut_exit(&strip->mutex);
+            if (final_ret != OS_RET_OK)
+            {
+                return final_ret;
+            }
+            return ret;
+        }
+    }
+
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return ret;
+}
+
+int os_led_strip_fill_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t col)
+{
+    // Bounds check!
+    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    if (lower_range >= upper_range)
+    {
+        return OS_RET_INVALID_PARAM;
+    }
+
+    int ret = os_mut_entry_wait_indefinite(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    rgb_t col_rgb = hsv2rgb(col);
+
+    // Iterate through range of pixels to set in range
+    for (int n = lower_range; n <= upper_range; n++)
+    {
+        ret = strip->strip_set_func(strip->strip, n, col_rgb.r, col_rgb.g, col_rgb.b);
+        if (ret != OS_RET_OK)
+        {
+            // Failiure somewhere, exit out!
+            int final_ret = os_mut_exit(&strip->mutex);
+            if (final_ret != OS_RET_OK)
+            {
+                return final_ret;
+            }
+            return ret;
+        }
+    }
+
+    ret = os_mut_exit(&strip->mutex);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    return ret;
 }
 
 int os_led_strip_set_hsv(os_led_strip_t *strip, uint32_t pixel, hsv_t col)
