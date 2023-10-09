@@ -58,7 +58,8 @@ int os_spi_deinit(os_spi_t *spi);
 int os_spi_couple_device(os_device_init_params init_params, os_device_t *device);
 
 /**
- *
+ *  @brief Decouple the SPI bus.
+ *  @param os_device_t *device
  */
 int os_spi_decouple_device(os_device_t *device);
 
