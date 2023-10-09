@@ -29,6 +29,13 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
     matrix->width = matrix_init.width;
     matrix->data_ptr = matrix_init.matrix_ptr;
 
+    matrix->matrix_mut = malloc(sizeof(os_mut_t));
+    int ret = os_mut_init((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
     // Calls the initialization function
     return matrix->init_func(matrix->data_ptr, matrix->width, matrix->height);
 }
@@ -45,7 +52,20 @@ int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb)
         return OS_RET_INVALID_PARAM;
     }
 
-    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+    int final_ret;
+    int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    final_ret = matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+    ret = os_mut_exit((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    return final_ret;
 }
 
 int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv)
@@ -61,7 +81,20 @@ int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv)
     }
     rgb_t rgb = hsv2rgb(hsv);
 
-    return matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+    int final_ret;
+    int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    final_ret = matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+    ret = os_mut_exit((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    return final_ret;
 }
 
 int os_ledmatrix_update(os_ledmatrix_t *matrix)
@@ -71,5 +104,22 @@ int os_ledmatrix_update(os_ledmatrix_t *matrix)
         return OS_RET_NULL_PTR;
     }
 
-    return matrix->update_fun(matrix->data_ptr);
+    int final_ret;
+    int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+    final_ret = matrix->update_fun(matrix->data_ptr);
+    ret = os_mut_exit((os_mut_t *)matrix->matrix_mut);
+    if (ret != OS_RET_OK)
+    {
+        return ret;
+    }
+
+    return final_ret;
+}
+
+int os_setpixel_ledmatrix_hsv_image(os_ledmatrix_t *matrix, hsv_t *hsv_range)
+{
 }

@@ -59,6 +59,8 @@ typedef struct os_ledmatrix
     void *data_ptr;
     int width;
     int height;
+
+    void *matrix_mut;
 } os_ledmatrix_t;
 
 /**
@@ -85,6 +87,15 @@ int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb);
  * @param hsv_t col color
  */
 int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv);
+
+/**
+ * @brief Set pixel ledmatrix all in one(prevents too much wasted time spent unlocking and locking mutexes)
+ * @param os_ledmatrix_t *matrix that we want to initialize
+ * @param int x pos
+ * @param int y pos
+ * @param hsv_t col color
+ */
+int os_setpixel_ledmatrix_hsv_image(os_ledmatrix_t *matrix, hsv_t *hsv_range);
 
 /**
  * @brief Updates the ledmatrix
