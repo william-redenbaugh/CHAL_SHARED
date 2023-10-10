@@ -10,6 +10,18 @@ bool is_valid_line(os_2d_line_t line)
     return true;
 }
 
+static int os_matrix_draw_vline(os_ledmatrix_t *matrix, int len, os_2d_point_t point, rgb_t col)
+{
+
+    Serial.printf("Points %d %d len %d\n", point.x, point.y, len);
+    for (int n = point.y; n <= point.y + len; n++)
+    {
+        matrix->setpixel_func(&matrix->data_ptr, point.x, n, col.r, col.g, col.b);
+    }
+
+    return OS_RET_OK;
+}
+
 // Swaps x n y corrdinates to make them valid
 os_2d_line_t os_make_line_valid(os_2d_line_t line)
 {
@@ -46,8 +58,6 @@ int os_drawline_ledmatrix(os_ledmatrix_t *matrix, os_2d_line_t line, rgb_t rgb)
 
     // Make sure line is valid to rasterize
     line = os_make_line_valid(line);
-
-    Serial.println("Drawing line");
 
     int x1 = line.p1.x;
     int x2 = line.p2.x;
@@ -112,6 +122,139 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
 
     // Calls the initialization function
     return matrix->init_func(matrix->data_ptr, matrix->width, matrix->height);
+}
+
+static inline int os_drawcircle_ledmatrix_outline(os_ledmatrix_t *matrix, os_2d_circle_t circle, rgb_t rgb)
+{
+    int x0 = circle.p.x;
+    int y0 = circle.p.y;
+    int r = circle.intensity;
+
+    int16_t f = 1 - r;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * r;
+    int16_t x = 0;
+    int16_t y = r;
+
+    matrix->setpixel_func(matrix->data_ptr, x0, y0 + r, rgb.r, rgb.g, rgb.b);
+    matrix->setpixel_func(matrix->data_ptr, x0, y0 - r, rgb.r, rgb.g, rgb.b);
+    matrix->setpixel_func(matrix->data_ptr, x0 + r, y0, rgb.r, rgb.g, rgb.b);
+    matrix->setpixel_func(matrix->data_ptr, x0 - r, y0, rgb.r, rgb.g, rgb.b);
+
+    while (x < y)
+    {
+        if (f >= 0)
+        {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
+
+        matrix->setpixel_func(matrix->data_ptr, x0 + x, y0 + y, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 - x, y0 + y, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 + x, y0 - y, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 - x, y0 - y, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 + y, y0 + x, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 - y, y0 + x, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 + y, y0 - x, rgb.r, rgb.g, rgb.b);
+        matrix->setpixel_func(matrix->data_ptr, x0 - y, y0 - x, rgb.r, rgb.g, rgb.b);
+    }
+    return OS_RET_OK;
+}
+
+static inline int os_drawcircle_ledmatrix_fill(os_ledmatrix_t *matrix, os_2d_circle_t circle, rgb_t rgb)
+{
+    os_2d_point_t point = circle.p;
+    int r = circle.intensity;
+    point.y = point.y - r;
+    // Drawin center line hehe
+    os_matrix_draw_vline(matrix, 2 * r + 1, point, rgb);
+
+    int corners = 3;
+    int16_t f = 1 - r;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * r;
+    int16_t x = 0;
+    int16_t y = r;
+    int16_t px = x;
+    int16_t py = y;
+    int x0 = circle.p.x;
+    int y0 = circle.p.y;
+
+    int delta = 1;
+
+    while (x < y)
+    {
+        if (f >= 0)
+        {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
+        // These checks avoid double-drawing certain lines, important
+        // for the SSD1306 library which has an INVERT drawing mode.
+        if (x < (y + 1))
+        {
+            if (corners & 1)
+            {
+                point.x = x0 + x;
+                point.y = y0 - y;
+                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+            }
+
+            if (corners & 2)
+            {
+                point.x = x0 - x;
+                point.y = y0 - y;
+                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+            }
+        }
+        if (y != py)
+        {
+            if (corners & 1)
+            {
+                point.x = x0 + py;
+                point.y = y0 - px;
+                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+            }
+            if (corners & 2)
+            {
+                point.x = x0 - py;
+                point.y = y0 - px;
+                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+            }
+            py = y;
+        }
+        px = x;
+    }
+
+    return OS_RET_OK;
+}
+
+int os_drawcircle_ledmatrix(os_ledmatrix_t *matrix, os_2d_circle_t circle, rgb_t rgb, os_ledmatrix_fill_type_t fill_type)
+{
+    if (matrix == NULL)
+    {
+        return OS_RET_NULL_PTR;
+    }
+
+    switch (fill_type)
+    {
+    case MATRIX_2D_FILL_OUTLINE:
+        return os_drawcircle_ledmatrix_outline(matrix, circle, rgb);
+
+    case MATRIX_2D_FILL_FULL:
+        return os_drawcircle_ledmatrix_fill(matrix, circle, rgb);
+
+    default:
+        return OS_RET_INVALID_PARAM;
+    }
 }
 
 int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb)

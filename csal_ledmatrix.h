@@ -47,6 +47,12 @@ typedef struct os_ledmatrix_init
     void *matrix_ptr;
 } os_ledmatrix_init_t;
 
+typedef enum os_ledmatrix_fill_type
+{
+    MATRIX_2D_FILL_OUTLINE,
+    MATRIX_2D_FILL_FULL
+} os_ledmatrix_fill_type_t;
+
 /**
  * @brief LED matrix handler
  */
@@ -74,6 +80,12 @@ typedef struct os_2d_line_t
     os_2d_point_t p1;
     os_2d_point_t p2;
 } os_2d_line_t;
+
+typedef struct os_2d_circle_t
+{
+    os_2d_point_t p;
+    int intensity;
+} os_2d_circle_t;
 
 /**
  * @brief Initialize matrix
@@ -106,6 +118,15 @@ int os_drawline_ledmatrix(os_ledmatrix_t *matrix, os_2d_line_t line, rgb_t rgb);
  * @return successful
  */
 int os_drawline_ledmatrix_hsv(os_ledmatrix_t *matrix, os_2d_line_t line, hsv_t hsv);
+
+/**
+ * @brief Renders a circle on the matrix
+ * @param os_ledmatrix_t *matrix
+ * @param os_2d_circle_t circle
+ * @param rgb_t rgb color structure
+ * @returns os return status
+ */
+int os_drawcircle_ledmatrix(os_ledmatrix_t *matrix, os_2d_circle_t circle, rgb_t rgb, os_ledmatrix_fill_type_t fill_type);
 
 /**
  * @brief Checks if line flows from left to right
