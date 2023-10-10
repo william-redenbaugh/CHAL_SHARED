@@ -63,6 +63,18 @@ typedef struct os_ledmatrix
     void *matrix_mut;
 } os_ledmatrix_t;
 
+typedef struct os_2d_point_t
+{
+    int x;
+    int y;
+} os_2d_point_t;
+
+typedef struct os_2d_line_t
+{
+    os_2d_point_t p1;
+    os_2d_point_t p2;
+} os_2d_line_t;
+
 /**
  * @brief Initialize matrix
  * @param os_ledmatrix_init_t matrix initialization structure
@@ -78,6 +90,33 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix);
  * @param rgb_t col color
  */
 int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb);
+
+/**
+ * @brief Renders a line on the matrix
+ * @param os_2d_line_t line
+ * @param rgb_t line
+ * @return successful
+ */
+int os_drawline_ledmatrix(os_ledmatrix_t *matrix, os_2d_line_t line, rgb_t rgb);
+
+/**
+ * @brief Renders a line on the matrix
+ * @param os_2d_line_t line
+ * @param hsv_t line
+ * @return successful
+ */
+int os_drawline_ledmatrix_hsv(os_ledmatrix_t *matrix, os_2d_line_t line, hsv_t hsv);
+
+/**
+ * @brief Checks if line flows from left to right
+ * @param os_2d_line_t line
+ */
+bool is_valid_line(os_2d_line_t line);
+
+/**
+ * @brief Makes line valid
+ */
+int os_make_line_valid(os_2d_line_t *line);
 
 /**
  * @brief Set pixel ledmatrix to specific hsv value

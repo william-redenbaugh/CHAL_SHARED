@@ -1,6 +1,80 @@
 #include "csal_ledmatrix.h"
 #include "global_includes.h"
 
+bool is_valid_line(os_2d_line_t line)
+{
+    if (line.p1.x > line.p2.x)
+        return false;
+    if (line.p1.y > line.p2.y)
+        return false;
+    return true;
+}
+
+// Swaps x n y corrdinates to make them valid
+os_2d_line_t os_make_line_valid(os_2d_line_t line)
+{
+    if (line.p1.x > line.p2.x)
+    {
+        int x = line.p1.x;
+        line.p1.x = line.p2.x;
+        line.p2.x = x;
+    }
+
+    if (line.p1.y > line.p2.y)
+    {
+        int y = line.p1.y;
+        line.p1.y = line.p2.y;
+        line.p2.y = y;
+    }
+
+    return line;
+}
+
+int os_drawline_ledmatrix_hsv(os_ledmatrix_t *matrix, os_2d_line_t line, hsv_t hsv)
+{
+    rgb_t col = hsv2rgb(hsv);
+    return os_drawline_ledmatrix(matrix, line, col);
+}
+
+int os_drawline_ledmatrix(os_ledmatrix_t *matrix, os_2d_line_t line, rgb_t rgb)
+{
+
+    if (matrix == NULL)
+    {
+        return OS_RET_NULL_PTR;
+    }
+
+    // Make sure line is valid to rasterize
+    line = os_make_line_valid(line);
+
+    Serial.println("Drawing line");
+
+    int x1 = line.p1.x;
+    int x2 = line.p2.x;
+    int y1 = line.p1.y;
+    int y2 = line.p2.y;
+
+    int m_new = 2 * (y2 - y1);
+    int slope_error_new = m_new - (x2 - x1);
+    for (int x = x1, y = y1; x <= x2; x++)
+    {
+        // Add slope to increment angle formed
+        slope_error_new += m_new;
+
+        // Slope error reached limit, time to
+        // increment y and update slope error.
+        if (slope_error_new >= 0)
+        {
+            y++;
+            slope_error_new -= 2 * (x2 - x1);
+        }
+        // Serial.printf("x:%d, y:%d\n", x, y);
+        matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
+    }
+
+    return OS_RET_OK;
+}
+
 int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
 {
 
