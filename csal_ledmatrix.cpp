@@ -21,6 +21,16 @@ static int os_matrix_draw_vline(os_ledmatrix_t *matrix, int len, os_2d_point_t p
     return OS_RET_OK;
 }
 
+static int os_matrix_draw_hline(os_ledmatrix_t *matrix, int len, os_2d_point_t point, rgb_t col)
+{
+    for (int n = point.x; n <= point.x + len; n++)
+    {
+        matrix->setpixel_func(matrix->data_ptr, n, point.y, col.r, col.g, col.b);
+    }
+
+    return OS_RET_OK;
+}
+
 // Swaps x n y corrdinates to make them valid
 os_2d_line_t os_make_line_valid(os_2d_line_t line)
 {
