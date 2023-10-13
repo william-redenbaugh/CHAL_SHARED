@@ -13,10 +13,9 @@ bool is_valid_line(os_2d_line_t line)
 static int os_matrix_draw_vline(os_ledmatrix_t *matrix, int len, os_2d_point_t point, rgb_t col)
 {
 
-    Serial.printf("Points %d %d len %d\n", point.x, point.y, len);
     for (int n = point.y; n <= point.y + len; n++)
     {
-        matrix->setpixel_func(&matrix->data_ptr, point.x, n, col.r, col.g, col.b);
+        matrix->setpixel_func(matrix->data_ptr, point.x, n, col.r, col.g, col.b);
     }
 
     return OS_RET_OK;
@@ -221,13 +220,13 @@ static inline int os_drawcircle_ledmatrix_fill(os_ledmatrix_t *matrix, os_2d_cir
             {
                 point.x = x0 + py;
                 point.y = y0 - px;
-                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+                os_matrix_draw_vline(matrix, 2 * px + delta, point, rgb);
             }
             if (corners & 2)
             {
                 point.x = x0 - py;
                 point.y = y0 - px;
-                os_matrix_draw_vline(matrix, 2 * y + delta, point, rgb);
+                os_matrix_draw_vline(matrix, 2 * px + delta, point, rgb);
             }
             py = y;
         }
