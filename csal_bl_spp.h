@@ -83,7 +83,7 @@ hal_bt_serial_err_t hal_ble_serial_init(void);
  * @param[in] len  Length of the data to be sent.
  * @return HAL_BT_SERIAL_OK on success, or an appropriate error code if an error occurs.
  */
-int hal_ble_serial_send(const uint8_t *data, size_t len);
+int hal_ble_serial_send(uint8_t *data, size_t len);
 
 /**
  * @brief Receive data over Bluetooth Serial.
