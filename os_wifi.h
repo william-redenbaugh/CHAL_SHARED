@@ -7,7 +7,59 @@
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 
 /**
- * @brief Initializes the underlying wifistack
+ * @brief address type
+ */
+typedef enum ipv_type_t
+{
+    IPV4,
+    IPV6
+} ipv_type_t;
+
+/**
+ * @brief IPV4 address
+ */
+typedef uint8_t ipv4_t[4];
+
+/**
+ * @brief IPV6 address
+ */
+typedef uint16_t ipv6_t[8];
+
+struct os_udp_server_instance_t;
+typedef void *(os_udp_server_socket_cb_t)(os_udp_server_instance_t *instance, void *addr, ipv_type_t type);
+
+typedef struct os_udp_server_params_t
+{
+    os_udp_server_socket_cb_t cb;
+    ipv_type_t ipv_type;
+    int port;
+    int queue_size;
+    int max_buffer_size;
+} os_udp_server_params_t;
+
+typedef struct os_udp_server_instance_t
+{
+    os_udp_server_params_t params;
+    void *internal_udp_server_struct;
+    uint8_t *recv_buffer;
+    bool deconstructed;
+} os_udp_server_instance_t;
+
+/**
+ * Initialize the UDP server with given parameters
+ * @param os_udp_server_instance_t *udp server
+ * @param os_udp_server_params_t udp server parameters
+ */
+int os_udp_init_server(os_udp_server_instance_t *udp_server, os_udp_server_params_t udp_server_params);
+
+/**
+ * @brief deinitializes the udp_server
+ * @param os_udp_server_instance_t *udp server
+ */
+int os_udp_deinit_server(os_udp_server_instance_t *udp_server);
+
+/**
+ * @brief Initiali/zes the underlying wifistack
  */
 int os_wifi_start_sta(void);
 
