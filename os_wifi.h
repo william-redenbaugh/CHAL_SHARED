@@ -7,6 +7,11 @@
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 
 /**
+ * @brief Initializes the underlying wifistack
+ */
+int os_wifi_start_sta(void);
+
+/**
  * @brief Connects the device to a Wi-Fi network in station (client) mode.
  *
  * This function attempts to connect the device to the specified Wi-Fi network
