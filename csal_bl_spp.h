@@ -98,6 +98,20 @@ int hal_ble_serial_send(uint8_t *data, size_t len);
  */
 int hal_ble_serial_receive(uint8_t *data, size_t len);
 
+
+/**
+ * @brief Receive data over Bluetooth Serial. Block until data is pushed in
+ *
+ * This function reads data from the Bluetooth SPP circular buffer into the provided buffer.
+ * If there is insufficient data in the buffer to fulfill the request, an error is returned.
+ *
+ * @param[out] data Pointer to the buffer where received data will be stored.
+ * @param[in]  len  Maximum number of bytes to receive.
+ * @return HAL_BT_SERIAL_OK on success, HAL_BT_SERIAL_ERROR if there is insufficient data,
+ *         or HAL_BT_SERIAL_INVALID_ARG if the provided buffer is NULL or the length is 0.
+ */
+int hal_ble_serial_receive_block(uint8_t *data, size_t len);
+
 /**
  * @brief Close the Bluetooth Serial module.
  *
