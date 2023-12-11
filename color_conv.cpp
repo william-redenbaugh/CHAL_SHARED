@@ -138,3 +138,43 @@ rgb_t kelvin2rgb(int kelvin)
 
     return col;
 }
+
+hsv_t rgb2hsv(const rgb_t rgb) {
+    hsv_t hsv;
+    uint8_t min, max, delta;
+    uint8_t red = rgb.r;
+    uint8_t green = rgb.g;
+    uint8_t blue = rgb.b;
+
+    min = red < green ? (red < blue ? red : blue) : (green < blue ? green : blue);
+    max = red > green ? (red > blue ? red : blue) : (green > blue ? green : blue);
+    hsv.v = max; // Value
+
+    delta = max - min;
+
+    if (max > 0) {
+        hsv.s = (delta * 255) / max; // Saturation
+    } else {
+        // R, G, and B are all 0, so s is 0 and h is undefined
+        hsv.s = 0;
+        hsv.h = 0; // Set Hue to undefined value
+        return hsv;
+    }
+
+    if (delta == 0) {
+        hsv.h = 0; // Hue undefined as delta is zero
+        return hsv;
+    } else if (red == max) {
+        hsv.h = 42 + ((green - blue) * 42) / delta; // Hue
+    } else if (green == max) {
+        hsv.h = 127 + ((blue - red) * 42) / delta; // Hue
+    } else {
+        hsv.h = 212 + ((red - green) * 42) / delta; // Hue
+    }
+
+    if (hsv.h < 0) {
+        hsv.h += 255; // Make sure hue is in the range [0, 255)
+    }
+
+    return hsv;
+}

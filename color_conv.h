@@ -38,4 +38,11 @@ rgb_t hsv2rgb(hsv_t hsv);
  */
 rgb_t kelvin2rgb(int kelvin);
 
+/**
+ * @brief Convert RGB color to HSV color space.
+ * 
+ * @param rgb RGB color values.
+ * @return Corresponding HSV color values.
+ */
+hsv_t rgb2hsv(const rgb_t rgb);
 #endif
