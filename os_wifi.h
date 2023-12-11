@@ -90,6 +90,22 @@ int os_wifi_connect_sta(char *ssid, char *password);
 int os_wifi_disconnect_sta(void);
 
 /**
+ * @brief Be able to send data to a device connected to the UDP server, can only be called from inside of the UDP server context
+ * @param os_udp_server_instance_t *udp server ptr
+ * @param uint8_t *data pointer to buffer of data to send
+ * @param size_t number of bytes sent
+ */
+void os_udp_server_send_packet_from_cb(os_udp_server_instance_t *udp_server, uint8_t *data, size_t numbytes);
+
+/**
+ * @brief Be able to receive data to a device connected to the UDP server, can only be called from inside of the UDP server context
+ * @param os_udp_server_instance_t *udp server ptr
+ * @param uint8_t *data pointer to buffer of data to reveive
+ * @param size_t number of bytes received
+ */
+void os_udp_server_receive_packet_from_cb(os_udp_server_instance_t *udp_server, uint8_t *data, size_t numbytes);
+
+/**
  * @brief Sets up a UDP server for WiFi communication.
  *
  * @param port The port number for the UDP server.
