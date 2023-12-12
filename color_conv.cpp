@@ -140,41 +140,44 @@ rgb_t kelvin2rgb(int kelvin)
 }
 
 hsv_t rgb2hsv(const rgb_t rgb) {
-    hsv_t hsv;
-    uint8_t min, max, delta;
-    uint8_t red = rgb.r;
-    uint8_t green = rgb.g;
-    uint8_t blue = rgb.b;
+    hsv_t hsv = {0, 0, 0};
 
-    min = red < green ? (red < blue ? red : blue) : (green < blue ? green : blue);
-    max = red > green ? (red > blue ? red : blue) : (green > blue ? green : blue);
-    hsv.v = max; // Value
+    float g = ((float)(rgb.r)) /255;
+    float r = ((float)(rgb.g)) /255;
+    float b = ((float)(rgb.b)) /255;
+  
+    float  maxc = fmax(r, fmax(g, b));
+    float  minc = fmin(r, fmin(g, b));
+    float v = maxc;
+    float h;
 
-    delta = max - min;
+    // WHITE
+    if (minc == maxc){
+        return {0, 0, rgb.b};
+    }
+    
+    float s = (maxc-minc) / maxc;
+    float rc = (maxc-r) / (maxc-minc);
+    float gc = (maxc-g) / (maxc-minc);
+    float bc = (maxc-b) / (maxc-minc);
+    if (r == maxc){
+        h = 0.0+bc-gc;
+    }
+    else if (g == maxc){
+        h = 2.0+rc-bc;
+    }
+    else{
+        h = 4.0+gc-rc;
+    }
+    h = (h/6.0);
 
-    if (max > 0) {
-        hsv.s = (delta * 255) / max; // Saturation
-    } else {
-        // R, G, and B are all 0, so s is 0 and h is undefined
-        hsv.s = 0;
-        hsv.h = 0; // Set Hue to undefined value
-        return hsv;
+    if(h < 0){
+        h = h * -1;
     }
 
-    if (delta == 0) {
-        hsv.h = 0; // Hue undefined as delta is zero
-        return hsv;
-    } else if (red == max) {
-        hsv.h = 42 + ((green - blue) * 42) / delta; // Hue
-    } else if (green == max) {
-        hsv.h = 127 + ((blue - red) * 42) / delta; // Hue
-    } else {
-        hsv.h = 212 + ((red - green) * 42) / delta; // Hue
-    }
-
-    if (hsv.h < 0) {
-        hsv.h += 255; // Make sure hue is in the range [0, 255)
-    }
-
+    hsv = 
+        {.h = (uint8_t)(h * 255),
+        .s =(uint8_t)(s * 255), 
+        .v = (uint8_t)(v * 255)};
     return hsv;
 }
