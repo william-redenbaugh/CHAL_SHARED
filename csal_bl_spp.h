@@ -120,4 +120,9 @@ int hal_ble_serial_receive_block(uint8_t *data, size_t len);
  */
 void hal_ble_serial_close(void);
 
+/**
+ * @brief Flush the contents from serial
+*/
+int hal_ble_flush_serial(void);
+
 #endif // HAL_BLUETOOTH_SERIAL_H
