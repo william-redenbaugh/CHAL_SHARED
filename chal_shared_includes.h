@@ -17,5 +17,6 @@
 #include "csal_ledmatrix.h"
 #include "os_led_strip.h"
 #include "status_led.h"
+#include "os_ota.h"
 
 #endif
