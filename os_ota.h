@@ -42,4 +42,8 @@ int os_ota_end(void);
  */
 int os_ota_halt_mark_invalid(void);
 
+/**
+ * @brief Marks current boot as functional, prevents OTA from rebooting from previous build before
+*/
+void os_ota_mark_functional_boot(void);
 #endif
