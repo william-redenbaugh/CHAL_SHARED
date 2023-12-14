@@ -18,5 +18,6 @@
 #include "os_led_strip.h"
 #include "status_led.h"
 #include "os_ota.h"
+#include "os_st_ap.h"
 
 #endif
