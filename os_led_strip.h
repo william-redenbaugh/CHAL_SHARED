@@ -21,6 +21,12 @@ struct _os_led_strip_t;
 _os_led_strip_t *_neopixel_os_led_strip_init(int bus, int gpio, uint32_t numpixels);
 
 /**
+ * @brief Deconstructor for the neopixel
+ * @param strip A pointer to the NeoPixel LED strip object.
+*/
+int free_neopixel_strip(_os_led_strip_t* strip);
+
+/**
  * @brief Sets the color of a specific pixel in the NeoPixel LED strip.
  *
  * This function sets the color of a specific pixel in the NeoPixel LED strip.
