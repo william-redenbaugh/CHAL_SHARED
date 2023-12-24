@@ -25,6 +25,7 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
         strip->strip = _neopixel_os_led_strip_init(bus, gpio, numpixels);
         strip->strip_set_func = _neopixel_os_led_strip_set;
         strip->strip_show_func = _neopixel_os_led_strip_show;
+        strip->strip_update_brightness_func = _neopixel_led_strip_set_brightness;
         break;
 #endif
 
@@ -34,6 +35,14 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
         strip->strip_set_func = _rmt_os_led_strip_set;
         strip->strip_show_func = _rmt_os_led_strip_show;
         break;
+#endif
+#ifdef ARDUINO_SPI_ESP32_STRIP
+    case STRIP_ARDUINO_SPI_DMA_RGB:
+        strip->strip = _spi_dma_os_led_strip_init(bus, gpio, numpixels);
+        strip->strip_set_func = _spi_dma_os_led_strip_set;
+        strip->strip_show_func = _spi_dma_os_led_strip_show;
+        strip->strip_update_brightness_func = _spi_dma_os_led_strip_set_brightness;
+    break;
 #endif
     }
 
