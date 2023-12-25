@@ -115,6 +115,53 @@ int _rmt_os_led_strip_show(_os_led_strip_t *strip);
 int _rmt_dma_os_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
 #endif
 
+#ifdef ARDUINO_I2S_ESP32_STRIP
+/**
+ * @brief Initializes an SPI DMA LED strip.
+ *
+ * @param bus The SPI bus number.
+ * @param gpio The GPIO pin number.
+ * @param numpixels Number of pixels in the LED strip.
+ * @return Pointer to the initialized LED strip on success, NULL on failure.
+ */
+_os_led_strip_t *_i2s_dma_os_led_strip_init(int bus, int gpio, uint32_t numpixels);
+
+/**
+ * @brief Frees memory associated with an SPI DMA LED strip.
+ *
+ * @param strip Pointer to the LED strip to be freed.
+ * @return OS_RET_NULL_PTR if strip is NULL, OS_RET_OK otherwise.
+ */
+int free_i2s_dma_strip(_os_led_strip_t *strip);
+
+/**
+ * @brief Sets the color of a specific pixel in the LED strip.
+ *
+ * @param strip Pointer to the LED strip.
+ * @param pixel Index of the pixel to set.
+ * @param r Red component (0-255).
+ * @param g Green component (0-255).
+ * @param b Blue component (0-255).
+ * @return OS_RET_NULL_PTR if strip is NULL, OS_RET_OK otherwise.
+ */
+int _i2s_dma_os_led_strip_set(_os_led_strip_t *strip, uint32_t pixel, uint8_t r, uint8_t g, uint8_t b);
+
+/**
+ * @brief Shows the updated LED strip.
+ *
+ * @param strip Pointer to the LED strip.
+ * @return OS_RET_NULL_PTR if strip is NULL, OS_RET_OK otherwise.
+ */
+int _i2s_dma_os_led_strip_show(_os_led_strip_t *strip);
+
+/**
+ * @brief Sets the updated brighntess for the led strip
+ * @param strip Pointer to LED strip
+ * @param uint8_t brightness level(0-255)
+*/
+int _i2s_dma_os_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
+#endif
+
 #ifdef ARDUINO_SPI_ESP32_STRIP
 /**
  * @brief Initializes an SPI DMA LED strip.
@@ -172,6 +219,9 @@ typedef enum
 #endif
 #ifdef ARDUINO_SPI_ESP32_STRIP
     STRIP_ARDUINO_SPI_DMA_RGB,
+#endif
+#ifdef ARDUINO_I2S_ESP32_STRIP
+    STRIP_ARDUINO_I2S_DMA_RGB,
 #endif
 } led_strip_type_t;
 
