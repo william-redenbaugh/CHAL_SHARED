@@ -4,6 +4,7 @@
 #include "color_conv.h"
 #include "enabled_modules.h"
 #ifdef OS_LED_STRIP
+
 struct _os_led_strip_t;
 
 // All the function definitions for the nepixel strips are here.
@@ -77,7 +78,6 @@ int _neopixel_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightnes
  * @note This function is available only when the preprocessor macro LED_STRIP_RMT is defined.
  */
 _os_led_strip_t *_rmt_os_led_strip_init(int bus, int gpio, uint32_t numpixels);
-
 /**
  * @brief Sets the color of a specific pixel in the LED strip.
  *

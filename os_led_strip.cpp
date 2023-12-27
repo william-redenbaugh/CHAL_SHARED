@@ -22,36 +22,45 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
     {
 #ifdef NEOPIXEL_LED_STRIP
     case STRIP_NEOPIXEL_RGB:
+    {
         strip->strip = _neopixel_os_led_strip_init(bus, gpio, numpixels);
         strip->strip_set_func = _neopixel_os_led_strip_set;
         strip->strip_show_func = _neopixel_os_led_strip_show;
         strip->strip_update_brightness_func = _neopixel_led_strip_set_brightness;
         break;
+    }
 #endif
 
 #ifdef LED_STRIP_RMT
     case STRIP_RMT_RGB:
+    {
         strip->strip = _rmt_os_led_strip_init(bus, gpio, numpixels);
         strip->strip_set_func = _rmt_os_led_strip_set;
         strip->strip_show_func = _rmt_os_led_strip_show;
+        strip->strip_update_brightness_func = _rmt_dma_os_led_strip_set_brightness;
         break;
+    }
 #endif
 #ifdef ARDUINO_SPI_ESP32_STRIP
     case STRIP_ARDUINO_SPI_DMA_RGB:
+    {
         strip->strip = _spi_dma_os_led_strip_init(bus, gpio, numpixels);
         strip->strip_set_func = _spi_dma_os_led_strip_set;
         strip->strip_show_func = _spi_dma_os_led_strip_show;
         strip->strip_update_brightness_func = _spi_dma_os_led_strip_set_brightness;
     break;
+    }
 #endif
 
 #ifdef ARDUINO_I2S_ESP32_STRIP
     case STRIP_ARDUINO_I2S_DMA_RGB:
+    {
         strip->strip = _i2s_dma_os_led_strip_init(bus, gpio, numpixels);
         strip->strip_set_func = _i2s_dma_os_led_strip_set;
         strip->strip_show_func = _i2s_dma_os_led_strip_show;
         strip->strip_update_brightness_func = _i2s_dma_os_led_strip_set_brightness;
     break;
+    }
 #endif
     }
 
