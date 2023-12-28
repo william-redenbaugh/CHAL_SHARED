@@ -24,8 +24,8 @@ _os_led_strip_t *_neopixel_os_led_strip_init(int bus, int gpio, uint32_t numpixe
 /**
  * @brief Deconstructor for the neopixel
  * @param strip A pointer to the NeoPixel LED strip object.
-*/
-int free_neopixel_strip(_os_led_strip_t* strip);
+ */
+int free_neopixel_strip(_os_led_strip_t *strip);
 
 /**
  * @brief Sets the color of a specific pixel in the NeoPixel LED strip.
@@ -56,7 +56,7 @@ int _neopixel_os_led_strip_show(_os_led_strip_t *strip);
  * @brief Sets the updated brighntess for the led strip
  * @param strip Pointer to LED strip
  * @param uint8_t brightness level(0-255)
-*/
+ */
 int _neopixel_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
 
 #endif
@@ -111,8 +111,61 @@ int _rmt_os_led_strip_show(_os_led_strip_t *strip);
  * @brief Sets the updated brighntess for the led strip
  * @param strip Pointer to LED strip
  * @param uint8_t brightness level(0-255)
-*/
+ */
 int _rmt_dma_os_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
+#endif
+
+#ifdef FASTLED_I2S
+/**
+ * @brief Initializes an LED strip object using the Remote Control Module (RMT).
+ *
+ * This function initializes an LED strip object for controlling LED strips using
+ * the Remote Control Module (RMT), typically for ESP32.
+ *
+ * @param strip A pointer to the LED strip object to be initialized.
+ * @param bus The communication bus identifier (e.g., SPI or I2C).
+ * @param gpio The GPIO pin number to which the LED strip data line is connected.
+ * @param numpixels The number of pixels in the LED strip.
+ * @return 0 on success, or a negative error code on failure.
+ *
+ * @note This function is available only when the preprocessor macro LED_STRIP_RMT is defined.
+ */
+_os_led_strip_t *_fastled_i2s_os_led_strip_init(int bus, int gpio, uint32_t numpixels);
+/**
+ * @brief Sets the color of a specific pixel in the LED strip.
+ *
+ * This function sets the color of a specific pixel in the LED strip.
+ *
+ * @param strip A pointer to the LED strip object.
+ * @param pixel The index of the pixel whose color you want to set.
+ * @param r The red component of the pixel's color (0-255).
+ * @param g The green component of the pixel's color (0-255).
+ * @param b The blue component of the pixel's color (0-255).
+ * @return 0 on success, or a negative error code on failure.
+ *
+ * @note This function is available only when the preprocessor macro LED_STRIP_RMT is defined.
+ */
+int _fastled_i2s_os_led_strip_set(_os_led_strip_t *strip, uint32_t pixel, uint8_t r, uint8_t g, uint8_t b);
+
+/**
+ * @brief Shows the current pixel colors on the LED strip.
+ *
+ * This function sends the color data to the LED strip, making the colors set by
+ * _rmt_os_led_strip_set() visible on the strip.
+ *
+ * @param strip A pointer to the LED strip object.
+ * @return 0 on success, or a negative error code on failure.
+ *
+ * @note This function is available only when the preprocessor macro LED_STRIP_RMT is defined.
+ */
+int _fastled_i2s_os_led_strip_show(_os_led_strip_t *strip);
+
+/**
+ * @brief Sets the updated brighntess for the led strip
+ * @param strip Pointer to LED strip
+ * @param uint8_t brightness level(0-255)
+ */
+int _fastled_i2s_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
 #endif
 
 #ifdef ARDUINO_I2S_ESP32_STRIP
@@ -158,7 +211,7 @@ int _i2s_dma_os_led_strip_show(_os_led_strip_t *strip);
  * @brief Sets the updated brighntess for the led strip
  * @param strip Pointer to LED strip
  * @param uint8_t brightness level(0-255)
-*/
+ */
 int _i2s_dma_os_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
 #endif
 
@@ -205,7 +258,7 @@ int _spi_dma_os_led_strip_show(_os_led_strip_t *strip);
  * @brief Sets the updated brighntess for the led strip
  * @param strip Pointer to LED strip
  * @param uint8_t brightness level(0-255)
-*/
+ */
 int _spi_dma_os_led_strip_set_brightness(_os_led_strip_t *strip, uint8_t brightness);
 #endif
 
@@ -222,6 +275,9 @@ typedef enum
 #endif
 #ifdef ARDUINO_I2S_ESP32_STRIP
     STRIP_ARDUINO_I2S_DMA_RGB,
+#endif
+#ifdef FASTLED_I2S
+    STRIP_FASTLED_I2S_DMA_RGB,
 #endif
 } led_strip_type_t;
 

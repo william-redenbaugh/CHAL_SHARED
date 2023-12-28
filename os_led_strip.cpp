@@ -48,7 +48,7 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
         strip->strip_set_func = _spi_dma_os_led_strip_set;
         strip->strip_show_func = _spi_dma_os_led_strip_show;
         strip->strip_update_brightness_func = _spi_dma_os_led_strip_set_brightness;
-    break;
+        break;
     }
 #endif
 
@@ -59,7 +59,18 @@ int os_led_strip_init(os_led_strip_t *strip, led_strip_type_t type, int bus, int
         strip->strip_set_func = _i2s_dma_os_led_strip_set;
         strip->strip_show_func = _i2s_dma_os_led_strip_show;
         strip->strip_update_brightness_func = _i2s_dma_os_led_strip_set_brightness;
-    break;
+        break;
+    }
+#endif
+
+#ifdef FASTLED_I2S
+    case STRIP_FASTLED_I2S_DMA_RGB:
+    {
+        strip->strip = _fastled_i2s_os_led_strip_init(bus, gpio, numpixels);
+        strip->strip_set_func = _fastled_i2s_os_led_strip_set;
+        strip->strip_show_func = _fastled_i2s_os_led_strip_show;
+        strip->strip_update_brightness_func = _fastled_i2s_led_strip_set_brightness;
+        break;
     }
 #endif
     }
