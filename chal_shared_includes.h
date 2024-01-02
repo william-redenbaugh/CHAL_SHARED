@@ -20,4 +20,5 @@
 #include "os_ota.h"
 #include "os_st_ap.h"
 #include "os_kvs.h"
+#include "os_unique_id.h"
 #endif
