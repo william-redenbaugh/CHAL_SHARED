@@ -74,7 +74,7 @@ void hal_bluetooth_serial_close(void);
  *
  * @return HAL_BT_SERIAL_OK on success, or an appropriate error code if an error occurs.
  */
-hal_bt_serial_err_t hal_ble_serial_init(ble_connected_cb_t cb);
+hal_bt_serial_err_t hal_ble_serial_init(ble_connected_cb_t cb, char *name, size_t name_len);
 
 /**
  * @brief Send data over Bluetooth Serial.
