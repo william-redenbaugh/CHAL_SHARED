@@ -22,7 +22,11 @@ typedef enum
     HAL_BT_SERIAL_BUFFER_OVERFLOW ///< Circular buffer overflow occurred.
 } hal_bt_serial_err_t;
 
+/**
+ * @brief Callback that 
+*/
 typedef void (*ble_connected_cb_t)(int id);
+typedef void (*ble_disconnected_cb_t)(int id);
 
 /**
  * @brief Initialize the Bluetooth Serial module.
@@ -32,7 +36,7 @@ typedef void (*ble_connected_cb_t)(int id);
  *
  * @return HAL_BT_SERIAL_OK on success, or an appropriate error code if an error occurs.
  */
-hal_bt_serial_err_t hal_bluetooth_serial_init(ble_connected_cb_t cb);
+hal_bt_serial_err_t hal_bluetooth_serial_init(ble_connected_cb_t cb, ble_disconnected_cb_t disc_cb);
 
 /**
  * @brief Send data over Bluetooth Serial.
@@ -74,7 +78,7 @@ void hal_bluetooth_serial_close(void);
  *
  * @return HAL_BT_SERIAL_OK on success, or an appropriate error code if an error occurs.
  */
-hal_bt_serial_err_t hal_ble_serial_init(ble_connected_cb_t cb, char *name, size_t name_len);
+hal_bt_serial_err_t hal_ble_serial_init(ble_connected_cb_t cb, ble_disconnected_cb_t disc_cb, char *name, size_t name_len);
 
 /**
  * @brief Send data over Bluetooth Serial.
