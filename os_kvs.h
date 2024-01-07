@@ -41,7 +41,7 @@ int os_kv_put_uint64(char* key, uint64_t value);
  * @param value The string value to be stored.
  * @return int 0 if successful, otherwise an error code.
  */
-int os_kv_put_string(char* key, char* value);
+int os_kv_put_string(char* key, char* value, size_t len);
 
 /**
  * @brief Get the uint32_t value associated with a key.
