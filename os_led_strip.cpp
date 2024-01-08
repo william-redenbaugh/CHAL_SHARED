@@ -135,7 +135,7 @@ int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col)
 int os_led_strip_set_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t *col)
 {
     // Bounds check!
-    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    if ((lower_range >= strip->numpixel) | (upper_range >= strip->numpixel))
     {
         return OS_RET_INVALID_PARAM;
     }
@@ -178,7 +178,7 @@ int os_led_strip_set_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint
 int os_led_strip_set_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t *col)
 {
     // Bounds check!
-    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    if ((lower_range >= strip->numpixel) | (upper_range >= strip->numpixel))
     {
         return OS_RET_INVALID_PARAM;
     }
@@ -223,7 +223,7 @@ int os_led_strip_set_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint
 int os_led_strip_fill_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t col)
 {
     // Bounds check!
-    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    if ((lower_range >= strip->numpixel) | (upper_range >= strip->numpixel))
     {
         return OS_RET_INVALID_PARAM;
     }
@@ -267,7 +267,7 @@ int os_led_strip_fill_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uin
 int os_led_strip_fill_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, hsv_t col)
 {
     // Bounds check!
-    if (lower_range >= strip->numpixel | upper_range >= strip->numpixel)
+    if ((lower_range >= strip->numpixel) | (upper_range >= strip->numpixel))
     {
         return OS_RET_INVALID_PARAM;
     }

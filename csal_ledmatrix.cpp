@@ -21,6 +21,7 @@ static int os_matrix_draw_vline(os_ledmatrix_t *matrix, int len, os_2d_point_t p
     return OS_RET_OK;
 }
 
+/*
 static int os_matrix_draw_hline(os_ledmatrix_t *matrix, int len, os_2d_point_t point, rgb_t col)
 {
     for (int n = point.x; n <= point.x + len; n++)
@@ -30,6 +31,7 @@ static int os_matrix_draw_hline(os_ledmatrix_t *matrix, int len, os_2d_point_t p
 
     return OS_RET_OK;
 }
+*/
 
 // Swaps x n y corrdinates to make them valid
 os_2d_line_t os_make_line_valid(os_2d_line_t line)
@@ -104,12 +106,12 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
     }
 
     // Basic checking of the structure to make sure none of the parameters are off
-    if (matrix_init.init_func == NULL |
-        matrix_init.setpixel_func == NULL |
-        matrix_init.update_func == NULL |
-        matrix_init.matrix_ptr == NULL |
-        matrix_init.height == 0 |
-        matrix_init.width == 0)
+    if ((matrix_init.init_func == NULL) |
+        (matrix_init.setpixel_func == NULL) |
+        (matrix_init.update_func == NULL) |
+        (matrix_init.matrix_ptr == NULL) |
+        (matrix_init.height == 0) |
+        (matrix_init.width == 0))
     {
 
         return OS_RET_INVALID_PARAM;
@@ -273,12 +275,12 @@ int os_setpixel_ledmatrix(os_ledmatrix_t *matrix, int x, int y, rgb_t rgb)
         return OS_RET_NULL_PTR;
     }
 
-    if (x > matrix->width | y > matrix->height)
+    if ((x > matrix->width) | (y > matrix->height))
     {
         return OS_RET_INVALID_PARAM;
     }
 
-    int final_ret;
+    int final_ret = OS_RET_OK;
     int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
     if (ret != OS_RET_OK)
     {
@@ -301,7 +303,7 @@ int os_setpixel_ledmatrix_hsv(os_ledmatrix_t *matrix, int x, int y, hsv_t hsv)
         return OS_RET_NULL_PTR;
     }
 
-    if (x > matrix->width | y > matrix->height)
+    if ((x > matrix->width) | (y > matrix->height))
     {
         return OS_RET_INVALID_PARAM;
     }
@@ -353,7 +355,7 @@ int os_setpixel_ledmatrix_hsv_image(os_ledmatrix_t *matrix, hsv_t *hsv_range)
         return OS_RET_NULL_PTR;
     }
 
-    int final_ret;
+    int final_ret = OS_RET_OK;
     int ret = os_mut_entry_wait_indefinite((os_mut_t *)matrix->matrix_mut);
 
     for (int x = 0; x < matrix->width; x++)
