@@ -11,7 +11,7 @@ void test_spi(void *parameters)
 
     if (ret != 0)
     {
-        Serial.printf("Failed to initialize spi: %d\n", ret);
+        os_printf("Failed to initialize spi: %d\n", ret);
     }
 
     os_device_init_params params = {
@@ -24,7 +24,7 @@ void test_spi(void *parameters)
     ret = os_spi_couple_device(params, &spi_device);
     if (ret != 0)
     {
-        Serial.printf("Failed to initialize spi device: %d\n", ret);
+        os_printf("Failed to initialize spi device: %d\n", ret);
     }
 
     uint8_t rx_buff[20];
@@ -33,7 +33,7 @@ void test_spi(void *parameters)
 
     if (ret != 0)
     {
-        Serial.printf("Failed to send data to spi: %d\n", ret);
+        os_printf("Failed to send data to spi: %d\n", ret);
     }
     // hal_ble_serial_init();
     //  eventqueue = new_local_eventqueue(20);

@@ -89,7 +89,7 @@ int os_drawline_ledmatrix(os_ledmatrix_t *matrix, os_2d_line_t line, rgb_t rgb)
             y++;
             slope_error_new -= 2 * (x2 - x1);
         }
-        // Serial.printf("x:%d, y:%d\n", x, y);
+        // os_printf("x:%d, y:%d\n", x, y);
         matrix->setpixel_func(matrix->data_ptr, x, y, rgb.r, rgb.g, rgb.b);
     }
 
