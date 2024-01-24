@@ -10,6 +10,7 @@
 #include "os_wifi.h"
 #include "os_i2s.h"
 #include "csal_bl_spp.h"
+#include "os_analog_read.h"
 
 #include "csal_ipc.h"
 #include "csal_ipc_message_publishqueue.h"
