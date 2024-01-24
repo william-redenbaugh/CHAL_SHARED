@@ -132,6 +132,11 @@ int os_led_strip_set_rgb(os_led_strip_t *strip, uint32_t pixel, rgb_t col)
     return os_led_strip_set(strip, pixel, col.r, col.g, col.b);
 }
 
+int os_led_strip_set_brightness(os_led_strip_t *strip, uint8_t brightness)
+{
+    return strip->strip_update_brightness_func(strip->strip, brightness);
+}
+
 int os_led_strip_set_rgb_range(os_led_strip_t *strip, uint32_t lower_range, uint32_t upper_range, rgb_t *col)
 {
     // Bounds check!

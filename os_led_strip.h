@@ -393,13 +393,20 @@ int os_led_strip_fill_hsv_range(os_led_strip_t *strip, uint32_t lower_range, uin
 /**
  * @brief Shows the updated LED colors on the strip.
  *
- * This function åupdates the LED strip with the colors previously set using os_led_strip_set().
+ * This function updates the LED strip with the colors previously set using os_led_strip_set().
  *
  * @param strip A pointer to the initialized LED strip structure.
  *
  * @return 0 on success, or a negative error code on failure.
  */
 int os_led_strip_show(os_led_strip_t *strip);
+
+/**
+ * @brief Update the brightness levels of of the strip
+ * @param os_led_strip_t A pointer to the initialized LED strip structure.
+ * @param uint8_t desired brightness
+*/
+int os_led_strip_set_brightness(os_led_strip_t *strip, uint8_t brightness);
 
 #endif
 #endif
