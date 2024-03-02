@@ -6,6 +6,8 @@
 #ifdef OS_WIFI
 #define OS_WIFI_CHECK_PACKET_INTERVAL (20)
 
+struct os_udp_server_t;
+
 /**
  * @brief address type
  */

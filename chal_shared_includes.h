@@ -22,4 +22,5 @@
 #include "os_st_ap.h"
 #include "os_kvs.h"
 #include "os_unique_id.h"
+#include "udp_fifostream.h"
 #endif
