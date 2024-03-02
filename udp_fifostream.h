@@ -5,6 +5,10 @@
 
 typedef struct udp_fifo_init{
     uint16_t port; 
+    int cs;
+    int clk;
+    int mosi;
+    int miso;
 }udp_fifo_init_t;
 struct udp_fifo_t;
 
