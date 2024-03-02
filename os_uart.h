@@ -5,9 +5,16 @@
 #include "stdlib.h"
 #include "stdint.h"
 
+typedef struct os_uart_config_t
+{
+    int rx_gpio;
+    int tx_gpio;
+} os_uart_config_t;
+
 typedef struct os_uart_t
 {
     uint32_t baud;
+    os_uart_config_t cfg;
     int fd;
     int bus;
 } os_uart_t;
@@ -15,7 +22,10 @@ typedef struct os_uart_t
 /**
  * @brief Begins the UART interface
  * @param os_uart_t *pointer to the UART interface
+ * @param int fd pointer
+ * @param baud rate
  */
+int os_uart_begin(os_uart_t *uart, os_uart_config_t cfg, int fd, int baud);
 int os_uart_begin(os_uart_t *uart, int fd, int baud);
 
 /**
@@ -89,4 +99,11 @@ int os_uart_send(os_uart_t *uart, uint8_t *buf, size_t size);
  * @param os_uart_t *pointer to the UART interface
  */
 int os_uart_recieve(os_uart_t *uart, uint8_t *buf, size_t size);
+
+/**
+ * @brief Recieves Data from the UART interface
+ * @param os_uart_t *pointer to the UART interface
+ */
+int os_uart_recieve_timeout(os_uart_t *uart, uint8_t *buf, size_t size, uint32_t timeout_ms);
+
 #endif
