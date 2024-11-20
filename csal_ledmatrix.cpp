@@ -101,7 +101,7 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
 
     if (matrix == NULL)
     {
-        Serial.println("Matrix null");
+        println("Matrix null");
         return OS_RET_NULL_PTR;
     }
 
