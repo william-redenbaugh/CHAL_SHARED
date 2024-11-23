@@ -14,5 +14,13 @@ struct dma_adc_handle_t;
 */
 dma_adc_handle_t* os_init_dma_adc(int adc_channel, uint32_t buffer_size, uint32_t speed);
 
+/**
+ * @brief Basically the same as the above but we actually have control over the GPIO
+ */
+dma_adc_handle_t* os_init_dma_adc(int adc_channel, int gpio, uint32_t buffer_size, uint32_t speed);
+
+/**
+ * @brief Reads x number of data from the ADC module into a buffer of size x
+ */
 int os_dma_read(dma_adc_handle_t *handle, uint8_t *buffer, size_t size);
 #endif
