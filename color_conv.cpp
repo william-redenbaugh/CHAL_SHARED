@@ -3,7 +3,7 @@
 
 rgb_t hsv2rgb(hsv_t hsv)
 {
-    
+
     rgb_t rgb;
 
     uint8_t region, remainder, p, q, t;
@@ -140,45 +140,65 @@ rgb_t kelvin2rgb(int kelvin)
     return col;
 }
 
-hsv_t rgb2hsv(const rgb_t rgb) {
+hsv_t rgb2hsv(const rgb_t rgb)
+{
     hsv_t hsv = {0, 0, 0};
 
-    float g = ((float)(rgb.r)) /255;
-    float r = ((float)(rgb.g)) /255;
-    float b = ((float)(rgb.b)) /255;
-  
-    float  maxc = fmax(r, fmax(g, b));
-    float  minc = fmin(r, fmin(g, b));
+    float g = ((float)(rgb.r)) / 255;
+    float r = ((float)(rgb.g)) / 255;
+    float b = ((float)(rgb.b)) / 255;
+
+    float maxc = fmax(r, fmax(g, b));
+    float minc = fmin(r, fmin(g, b));
     float v = maxc;
     float h;
 
     // WHITE
-    if (minc == maxc){
+    if (minc == maxc)
+    {
         return {0, 0, rgb.b};
     }
-    
-    float s = (maxc-minc) / maxc;
-    float rc = (maxc-r) / (maxc-minc);
-    float gc = (maxc-g) / (maxc-minc);
-    float bc = (maxc-b) / (maxc-minc);
-    if (r == maxc){
-        h = 0.0+bc-gc;
-    }
-    else if (g == maxc){
-        h = 2.0+rc-bc;
-    }
-    else{
-        h = 4.0+gc-rc;
-    }
-    h = (h/6.0);
 
-    if(h < 0){
+    float s = (maxc - minc) / maxc;
+    float rc = (maxc - r) / (maxc - minc);
+    float gc = (maxc - g) / (maxc - minc);
+    float bc = (maxc - b) / (maxc - minc);
+    if (r == maxc)
+    {
+        h = 0.0 + bc - gc;
+    }
+    else if (g == maxc)
+    {
+        h = 2.0 + rc - bc;
+    }
+    else
+    {
+        h = 4.0 + gc - rc;
+    }
+    h = (h / 6.0);
+
+    if (h < 0)
+    {
         h = h * -1;
     }
 
-    hsv = 
+    hsv =
         {.h = (uint8_t)(h * 255),
-        .s =(uint8_t)(s * 255), 
-        .v = (uint8_t)(v * 255)};
+         .s = (uint8_t)(s * 255),
+         .v = (uint8_t)(v * 255)};
     return hsv;
+}
+
+// Function to convert RGB888 to RGB565
+uint16_t rgb888_to_rgb565(uint8_t red, uint8_t green, uint8_t blue)
+{
+    // Extract the most significant 5 bits of red, 6 bits of green, and 5 bits of blue
+    uint16_t r = (red >> 3) & 0x1F;   // 5 bits for red
+    uint16_t g = (green >> 2) & 0x3F; // 6 bits for green
+    uint16_t b = (blue >> 3) & 0x1F;  // 5 bits for blue
+
+    // Combine into RGB565 format: RRRRRGGGGGGBBBBB
+    uint16_t rgb565 = (r << 11) | (g << 5) | b;
+
+    return rgb565;
 }
