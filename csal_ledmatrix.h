@@ -163,4 +163,9 @@ int os_setpixel_ledmatrix_hsv_image(os_ledmatrix_t *matrix, hsv_t *hsv_range);
  */
 int os_ledmatrix_update(os_ledmatrix_t *matrix);
 
+/**
+ * @brief Clears the ledmatrix or sets it to zero
+ * @param os_ledmatrix_t *matrix that we want to initialize
+ */
+int os_clear_ledmatrix(os_ledmatrix_t *matrix);
 #endif

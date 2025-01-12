@@ -135,6 +135,19 @@ int os_init_ledmatrix(os_ledmatrix_init_t matrix_init, os_ledmatrix_t *matrix)
     return matrix->init_func(matrix->data_ptr, matrix->width, matrix->height);
 }
 
+int os_clear_ledmatrix(os_ledmatrix_t *matrix)
+{
+    for (int x = 0; x < matrix->width; x++)
+    {
+        for (int y = 0; y < matrix->height; y++)
+        {
+            os_setpixel_ledmatrix(matrix, x, y, {0, 0, 0});
+        }
+    }
+
+    return OS_RET_OK;
+}
+
 static inline int os_drawcircle_ledmatrix_outline(os_ledmatrix_t *matrix, os_2d_circle_t circle, rgb_t rgb)
 {
     int x0 = circle.p.x;
